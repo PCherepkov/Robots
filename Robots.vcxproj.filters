@@ -25,12 +25,21 @@
     <Filter Include="Source Files\mth">
       <UniqueIdentifier>{e4acb4de-2105-47d4-bfb9-09b839da4fad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{edff942c-14f0-4d8f-91b7-fddafa10e270}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="rnd\render.cpp">
+      <Filter>Source Files\render</Filter>
+    </ClCompile>
+    <ClCompile Include="utils\utils.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="rnd\gl_funcs.cpp">
       <Filter>Source Files\render</Filter>
     </ClCompile>
   </ItemGroup>
@@ -43,6 +52,27 @@
     </ClInclude>
     <ClInclude Include="mth\mth.h">
       <Filter>Source Files\mth</Filter>
+    </ClInclude>
+    <ClInclude Include="mth\camera.h">
+      <Filter>Source Files\mth</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\timer.h">
+      <Filter>Source Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd\anim.h">
+      <Filter>Source Files\render</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utils\utils.h">
+      <Filter>Source Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd\gl_funcs.h">
+      <Filter>Source Files\render</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd\topology.h">
+      <Filter>Source Files\render</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -88,10 +88,12 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>X:\TGRKIT\INCLUDE;$(OPENAL_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>X:\TGRKIT\LIB;$(OPENAL_DIR)Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -140,12 +142,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="rnd\gl_funcs.cpp" />
     <ClCompile Include="rnd\render.cpp" />
+    <ClCompile Include="utils\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="def.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="mth\camera.h" />
     <ClInclude Include="mth\mth.h" />
+    <ClInclude Include="rnd\anim.h" />
+    <ClInclude Include="rnd\gl_funcs.h" />
     <ClInclude Include="rnd\render.h" />
+    <ClInclude Include="rnd\topology.h" />
+    <ClInclude Include="utils\timer.h" />
+    <ClInclude Include="utils\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
