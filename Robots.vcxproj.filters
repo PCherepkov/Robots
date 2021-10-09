@@ -28,6 +28,9 @@
     <Filter Include="Source Files\utils">
       <UniqueIdentifier>{edff942c-14f0-4d8f-91b7-fddafa10e270}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ui">
+      <UniqueIdentifier>{c3108070-e764-4a6a-8e58-1f09538cfccc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -41,6 +44,15 @@
     </ClCompile>
     <ClCompile Include="rnd\gl_funcs.cpp">
       <Filter>Source Files\render</Filter>
+    </ClCompile>
+    <ClCompile Include="ui\controls.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="mth\matr.h">
+      <Filter>Source Files\mth</Filter>
+    </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +85,15 @@
     </ClInclude>
     <ClInclude Include="rnd\topology.h">
       <Filter>Source Files\render</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\controls.h">
+      <Filter>Source Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="mth\vec.h">
+      <Filter>Source Files\mth</Filter>
+    </ClInclude>
+    <ClInclude Include="mth\mthdef.h">
+      <Filter>Source Files\mth</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

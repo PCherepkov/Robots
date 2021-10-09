@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'def.h'
- * LAST UPDATE: 06.10.2021
+ * LAST UPDATE: 09.10.2021
  */
 
 #pragma once
@@ -11,7 +11,13 @@
 #include <string.h>
 #include <stdio.h>
 
-#include <glut.h>
+#pragma comment(lib, "legacy_stdio_definitions.lib")
+
+// #include <glut.h>
+
+#define GLFW_INCLUDE_NONE
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 using namespace std;
 

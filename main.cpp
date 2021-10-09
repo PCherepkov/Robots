@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'main.cpp'
- * LAST UPDATE: 08.10.2021
+ * LAST UPDATE: 09.10.2021
  */
 
 #include "def.h"
@@ -9,29 +9,31 @@
 anim ani;
 
 int main(int argc, char* argv[]) {
-  glutInit(&argc, argv);
+  if (!glfwInit())
+    return 1;
 
-  glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH);
+  GLFWwindow* window = glfwCreateWindow(800, 800, "Robots", NULL, NULL);
+  if (window == NULL)
+    return 2;
 
-  glutInitWindowPosition(0, 0);
-  glutInitWindowSize(800, 800);
-  glutCreateWindow("Robots");
+  glfwMakeContextCurrent(window);
 
-  glutDisplayFunc(Display);
-  glutKeyboardFunc(Keyboard);
-  glutReshapeFunc(Reshape);
-  glutIdleFunc(Idle);
-  glutMouseFunc(Mouse);
+  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    return 3;
 
-  glEnable(GL_LIGHTING);
-  glEnable(GL_LIGHT0);
-  glEnable(GL_COLOR_MATERIAL);
-  glEnable(GL_DEPTH_TEST);
+  // GLFWframebuffersizefun
+  glfwSetFramebufferSizeCallback(window, Reshape);
 
   ani.cam.SetPos(vec3(0, 2, 2));
   ani.cam.SetAt(vec3(0));
 
-  glutMainLoop();
+  while (!glfwWindowShouldClose(window)) {
+    glfwSwapBuffers(window);
+    glfwPollEvents();
+  }
+
+  glfwDestroyWindow(window);
+  glfwTerminate();
 
   return 0;
 }

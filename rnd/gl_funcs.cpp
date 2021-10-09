@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'gl_funcs.cpp'
- * LAST UPDATE: 08.10.2021
+ * LAST UPDATE: 09.10.2021
  */
 
 /* common glut handling functions */
@@ -8,7 +8,22 @@
 #include "render.h"
 #include "../def.h"
 #include "../utils/utils.h"
+#include "../ui/controls.h"
 
+void Reshape(GLFWwindow* window, int w, int h) {
+  glViewport(0, 0, w, h);
+
+  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+  // gluPerspective(60, 1.0 * w / h, 0.1, 1000);
+  glMatrixMode(GL_MODELVIEW);
+
+  ani.w = w;
+  ani.h = h;
+}
+
+
+#if 0
 void Display(void) {
   glClearColor(0.17, 0.1603, 0.209, 1);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -33,30 +48,29 @@ void Keyboard(uchar key, int x, int y) {
   }
 }
 
+
 void Idle(void) {
   ani.UpdateTimer();
   ani.Response();
-  // WASD();
-}
-
-void Reshape(int w, int h) {
-  glViewport(0, 0, w, h);
-
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-  gluPerspective(60, 1.0 * w / h, 0.1, 1000);
-  glMatrixMode(GL_MODELVIEW);
-
-  ani.w = w;
-  ani.h = h;
-
-  Idle();
-  Display();
+  FlyingWASD();
 }
 
 void Mouse(int button, int state, int x, int y) {
   ani.state = state;
   ani.button = button;
+  ani.Response(x, y);
+  Head();
 }
+
+void PassiveMotion(int x, int y) {
+  ani.Response(x, y);
+  Head();
+}
+
+void Motion(int x, int y) {
+  ani.Response(x, y);
+  Head();
+}
+#endif
 
  /* END OF 'gl_funcs.cpp' FILE */

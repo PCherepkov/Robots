@@ -11,8 +11,10 @@
 
 void Display(void);
 void Idle(void);
-void Reshape(int w, int h);
+void Reshape(GLFWwindow* window, int w, int h);
 void Keyboard(uchar key, int x, int y);
 void Mouse(int button, int state, int x, int y);
+void PassiveMotion(int x, int y);
+void Motion(int x, int y);
 
  /* END OF 'gl_funcs.h' FILE */

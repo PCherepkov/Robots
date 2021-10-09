@@ -88,12 +88,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>X:\TGRKIT\INCLUDE;$(OPENAL_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>X:\glad\include;X:\TGRKIT\INCLUDE;X:\glfw-3.0.4.bin.WIN32\include;$(OPENAL_DIR)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>X:\TGRKIT\LIB;$(OPENAL_DIR)Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>X:\glfw-3.0.4.bin.WIN32\lib-msvc110;X:\TGRKIT\LIB;$(OPENAL_DIR)Libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -141,9 +142,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="mth\matr.h" />
     <ClCompile Include="rnd\gl_funcs.cpp" />
     <ClCompile Include="rnd\render.cpp" />
+    <ClCompile Include="ui\controls.cpp" />
     <ClCompile Include="utils\utils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,10 +155,13 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="mth\camera.h" />
     <ClInclude Include="mth\mth.h" />
+    <ClInclude Include="mth\mthdef.h" />
+    <ClInclude Include="mth\vec.h" />
     <ClInclude Include="rnd\anim.h" />
     <ClInclude Include="rnd\gl_funcs.h" />
     <ClInclude Include="rnd\render.h" />
     <ClInclude Include="rnd\topology.h" />
+    <ClInclude Include="ui\controls.h" />
     <ClInclude Include="utils\timer.h" />
     <ClInclude Include="utils\utils.h" />
   </ItemGroup>

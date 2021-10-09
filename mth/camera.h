@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'camera.h'
- * LAST UPDATE: 07.10.2021
+ * LAST UPDATE: 08.10.2021
  */
 
 #pragma once
@@ -100,8 +100,8 @@ public:
 
 	void SetPos(vec3 Loc) {
 		pos = Loc;
-		right = ((pos - at) % vec3(0, 1, 0)).Normalizing();
-		up = (right % (pos - at)).Normalizing();
+		right = ((at - pos) % vec3(0, 1, 0)).Normalizing();
+		up = (right % (at - pos)).Normalizing();
 	}
 
 	vec3 GetPos(void) {
@@ -110,8 +110,8 @@ public:
 
 	void SetAt(vec3 Look) {
 		at = Look;
-		right = ((pos - at) % vec3(0, 1, 0)).Normalizing();
-		up = (right % (pos - at)).Normalizing();
+		right = ((at - pos) % vec3(0, 1, 0)).Normalizing();
+		up = (right % (at - pos)).Normalizing();
 	}
 
 	vec3 GetAt(void) {
@@ -127,7 +127,7 @@ public:
 	}
 
 	vec3 GetDir(void) {
-		return (pos - at).Normalizing();
+		return (at - pos).Normalizing();
 	}
 };
 
