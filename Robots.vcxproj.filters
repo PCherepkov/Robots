@@ -31,6 +31,9 @@
     <Filter Include="Source Files\ui">
       <UniqueIdentifier>{c3108070-e764-4a6a-8e58-1f09538cfccc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\render\shaders">
+      <UniqueIdentifier>{870806fb-11ee-4469-8e88-61ab93329b95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -83,9 +86,6 @@
     <ClInclude Include="rnd\gl_funcs.h">
       <Filter>Source Files\render</Filter>
     </ClInclude>
-    <ClInclude Include="rnd\topology.h">
-      <Filter>Source Files\render</Filter>
-    </ClInclude>
     <ClInclude Include="ui\controls.h">
       <Filter>Source Files\ui</Filter>
     </ClInclude>
@@ -94,6 +94,12 @@
     </ClInclude>
     <ClInclude Include="mth\mthdef.h">
       <Filter>Source Files\mth</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd\shd\shaders.h">
+      <Filter>Source Files\render\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd\prim.h">
+      <Filter>Source Files\render</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

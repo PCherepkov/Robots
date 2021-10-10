@@ -10,14 +10,15 @@
 #include <iostream>
 #include <string.h>
 #include <stdio.h>
+#include <string>
 
 #pragma comment(lib, "legacy_stdio_definitions.lib")
-
-// #include <glut.h>
 
 #define GLFW_INCLUDE_NONE
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
+#include <glut.h>
 
 using namespace std;
 

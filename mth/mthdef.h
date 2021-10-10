@@ -10,6 +10,7 @@
 #include <Windows.h>
 
 typedef double dbl;
+typedef float flt;
 
 #define PI 3.1415926535897932384626433832795
 #define D2R(x) (x * PI / 180)

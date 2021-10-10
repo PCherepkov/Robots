@@ -159,8 +159,9 @@
     <ClInclude Include="mth\vec.h" />
     <ClInclude Include="rnd\anim.h" />
     <ClInclude Include="rnd\gl_funcs.h" />
+    <ClInclude Include="rnd\prim.h" />
     <ClInclude Include="rnd\render.h" />
-    <ClInclude Include="rnd\topology.h" />
+    <ClInclude Include="rnd\shd\shaders.h" />
     <ClInclude Include="ui\controls.h" />
     <ClInclude Include="utils\timer.h" />
     <ClInclude Include="utils\utils.h" />

@@ -11,30 +11,33 @@
 #define BEGIN glPushMatrix(); {
 #define END   } glPopMatrix();
 
-#if 0
-void Render(void) {
+void RenderInit(GLFWwindow* window) {
   vec3
     pos = ani.cam.GetPos(),
     at = ani.cam.GetAt(),
     up = ani.cam.GetUp();
 
-  /* test scene */
-  {
-    topo smth;
-    smth.descr = GL_TRIANGLE_STRIP;
+  prim smth(std::vector<vertex>({
+    { vec3(-1, -1, 0) / 2, vec3(0), vec3(0, 1, 0), vec3(1, 0, 0) },
+    { vec3(1, -1, 0) / 2, vec3(0), vec3(0, 1, 0), vec3(1, 0.25, 0.25) },
+    { vec3(-1, 1, 0) / 2, vec3(0), vec3(0, 1, 0), vec3(0.25, 0.25, 0.25) }
+    }));
 
-    smth.verts.push_back({ vec3(-1, 0, -1), vec3(0), vec3(0, 1, 0), vec3(1, 0, 0) });
-    smth.verts.push_back({ vec3(1, 0, -1), vec3(0), vec3(0, 1, 0), vec3(1, 0.25, 0.25) });
-    smth.verts.push_back({ vec3(-1, 0, 1), vec3(0), vec3(0, 1, 0), vec3(0.25, 0.25, 0.25) });
-    smth.verts.push_back({ vec3(1, 0, 1), vec3(0), vec3(0, 1, 0), vec3(0.25, 0.25, 0.25) });
+  ani.AddPrim(smth);
+}
 
-    BEGIN
-      gluLookAt(pos[0], pos[1], pos[2], at[0], at[1], at[2], 0, 1, 0);
-    smth.Draw();
-    END
+void Render(GLFWwindow* window) {
+  glClearColor(0.17, 0.1603, 0.209, 1);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  std::vector<prim> prs;
+  ani.GetPrims(&prs);
+  for (auto pr : prs) {
+    pr.Draw();
   }
 
   /* debug output */
+#if 0
   BEGIN
   {
     gluLookAt(pos[0], pos[1], pos[2], at[0], at[1], at[2], 0, 1, 0);
@@ -53,8 +56,8 @@ void Render(void) {
     END
     glMatrixMode(GL_MODELVIEW);
   }
-  END
-}
+    END
 #endif
+}
 
 /* END OF 'render.cpp' FILE */

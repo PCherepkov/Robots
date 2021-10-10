@@ -8,8 +8,10 @@
 /* animation class file */
 
 #include "../utils/timer.h"
+#include "prim.h"
 
 class anim : public camera, public timer, public keyboard, public mouse {
+	std::vector<prim> prims;
 public:
 	int w, h;
 	camera cam;
@@ -25,8 +27,16 @@ public:
 		keyboard::Response();
 	}
 
-	void Response(int newx, int newy) {
+	void Response(const int& newx, const int& newy) {
 		mouse::Response(newx, newy);
+	}
+
+	void GetPrims(std::vector<prim>* prs) {
+		*prs = prims;
+	}
+
+	void AddPrim(const prim& pr) {
+		prims.push_back(pr);
 	}
 };
 

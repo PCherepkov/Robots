@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'main.cpp'
- * LAST UPDATE: 09.10.2021
+ * LAST UPDATE: 10.10.2021
  */
 
 #include "def.h"
@@ -21,13 +21,17 @@ int main(int argc, char* argv[]) {
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     return 3;
 
-  // GLFWframebuffersizefun
   glfwSetFramebufferSizeCallback(window, Reshape);
 
   ani.cam.SetPos(vec3(0, 2, 2));
   ani.cam.SetAt(vec3(0));
 
+  RenderInit(window);
   while (!glfwWindowShouldClose(window)) {
+    Input(window);
+
+    Render(window);
+
     glfwSwapBuffers(window);
     glfwPollEvents();
   }
