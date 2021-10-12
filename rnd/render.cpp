@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'render.cpp'
- * LAST UPDATE: 09.10.2021
+ * LAST UPDATE: 12.10.2021
  */
 
 /* rendering functions */
@@ -18,10 +18,10 @@ void RenderInit(GLFWwindow* window) {
     up = ani.cam.GetUp();
 
   prim smth(std::vector<vertex>({
-    { vec3(-1, -1, 0) / 2, vec3(0), vec3(0, 1, 0), vec3(1, 0, 0) },
-    { vec3(1, -1, 0) / 2, vec3(0), vec3(0, 1, 0), vec3(1, 0.25, 0.25) },
-    { vec3(-1, 1, 0) / 2, vec3(0), vec3(0, 1, 0), vec3(0.25, 0.25, 0.25) }
-    }));
+    { vec3(-1, -1, 0), vec3(0), vec3(0, 1, 0), vec3(1, 0, 0) },
+    { vec3(-1, 1, 0), vec3(0), vec3(0, 1, 0), vec3(1, 0.25, 0.25) },
+    { vec3(1, 1, 0), vec3(0), vec3(0, 1, 0), vec3(0.25, 0.25, 0.25) }
+    }), std::vector<uint>({0, 1, 2}));
 
   ani.AddPrim(smth);
 }
@@ -29,6 +29,11 @@ void RenderInit(GLFWwindow* window) {
 void Render(GLFWwindow* window) {
   glClearColor(0.17, 0.1603, 0.209, 1);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  if (anim::GetRef().is_wire_frame)
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  else
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
   std::vector<prim> prs;
   ani.GetPrims(&prs);

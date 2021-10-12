@@ -43,32 +43,32 @@ void FlyingWASD(void) {
     dir = ani.cam.GetDir(),
     up = ani.cam.GetUp();
 
-  if (ani.Keys['W'] || ani.Keys['w']) {
+  if (ani.keys['W'] || ani.keys['w']) {
     ani.cam.SetAt(at + dir / ani.fps);
     ani.cam.SetPos(pos + dir / ani.fps);
   }
 
-  if (ani.Keys['S'] || ani.Keys['s']) {
+  if (ani.keys['S'] || ani.keys['s']) {
     ani.cam.SetAt(at - dir / ani.fps);
     ani.cam.SetPos(pos - dir / ani.fps);
   }
 
-  if (ani.Keys['D'] || ani.Keys['d']) {
+  if (ani.keys['D'] || ani.keys['d']) {
     ani.cam.SetAt(at + right / ani.fps);
     ani.cam.SetPos(pos + right / ani.fps);
   }
 
-  if (ani.Keys['A'] || ani.Keys['a']) {
+  if (ani.keys['A'] || ani.keys['a']) {
     ani.cam.SetAt(at - right / ani.fps);
     ani.cam.SetPos(pos - right / ani.fps);
   }
 
-  if (ani.Keys[VK_SHIFT]) {
+  if (ani.keys[VK_SHIFT]) {
     ani.cam.SetAt(at - up / ani.fps);
     ani.cam.SetPos(pos - up / ani.fps);
   }
 
-  if (ani.Keys[VK_SPACE]) {
+  if (ani.keys[VK_SPACE]) {
     ani.cam.SetAt(at + up / ani.fps);
     ani.cam.SetPos(pos + up / ani.fps);
   }

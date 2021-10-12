@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'anim.h'
- * LAST UPDATE: 07.10.2021
+ * LAST UPDATE: 12.10.2021
  */
 
 #pragma once
@@ -9,6 +9,10 @@
 
 #include "../utils/timer.h"
 #include "prim.h"
+
+class anim;
+
+extern anim ani;
 
 class anim : public camera, public timer, public keyboard, public mouse {
 	std::vector<prim> prims;
@@ -38,8 +42,10 @@ public:
 	void AddPrim(const prim& pr) {
 		prims.push_back(pr);
 	}
-};
 
-extern anim ani;
+	static anim& GetRef(void) {
+		return ani;
+	}
+};
 
  /* END OF 'anim.h' FILE */

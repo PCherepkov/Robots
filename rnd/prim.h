@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
- * FILE: 'topology.h'
- * LAST UPDATE: 08.10.2021
+ * FILE: 'prim.h'
+ * LAST UPDATE: 12.10.2021
  */
 
 #pragma once
@@ -10,6 +10,9 @@
 #include <vector>
 #include "../def.h"
 #include "shd/shaders.h"
+#include "render.h"
+
+class anim;
 
 /* additional structure for vertex of topology */
 
@@ -21,10 +24,12 @@ struct vertex
 /* topology class itself */
 
 class prim {
-  uint vbo, vao;
+  uint vbo, vao, ebo;
+
 public:
-  std::string descr;
+  uint prim_type; // GL_TRIANGLES, ...
   std::vector<vertex> verts;  
+  std::vector<uint> inds;
   shader* shd;
 
   prim() {
@@ -33,30 +38,30 @@ public:
     glGenVertexArrays(1, &vao);
   }
 
-  prim(std::vector<vertex> vcs) {
+  prim(std::vector<vertex> vcs, std::vector<uint> indxs) {
+    prim_type = GL_TRIANGLES;
     verts = vcs;
+    inds = indxs;
     shd = new shader("rnd/shd/DEFAULT/");
     glGenBuffers(1, &vbo);
+    glGenBuffers(1, &ebo);
     glGenVertexArrays(1, &vao);
 
-    flt vertices[] = {
-      -0.5f, -0.5f, 0.0f,
-      0.5f, -0.5f, 0.0f,
-      0.0f, 0.5f, 0.0f
-    };
-
-#if 0
     flt* vertices = new flt[vcs.size() * 3];
     for (uint i = 0; i < vcs.size(); i++) {
       vertices[i * 3 + 0] = (flt)vcs[i].p[0];
       vertices[i * 3 + 1] = (flt)vcs[i].p[1];
       vertices[i * 3 + 2] = (flt)vcs[i].p[2];
     }
-#endif
 
     glBindVertexArray(vao);
+
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vcs.size() * 3 * sizeof(flt), vertices, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, inds.size() * sizeof(inds[0]), inds.data(), GL_STATIC_DRAW);
+
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -68,9 +73,10 @@ public:
   VOID Draw(VOID) {
     glUseProgram(shd->prg);
     glBindVertexArray(vao);
-    glDrawArrays(GL_TRIANGLES, 0, verts.size());
+    glDrawElements(prim_type, verts.size(), GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
   }
 };
 
 
-/* END OF 'topology.h' FILE */
+/* END OF 'prim.h' FILE */

@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'camera.h'
- * LAST UPDATE: 08.10.2021
+ * LAST UPDATE: 12.10.2021
  */
 
 #pragma once
@@ -13,31 +13,31 @@ class keyboard
 {
 public:
 	byte
-		Keys[256],
-		KeysOld[256],
-		KeysClick[256];
+		keys[256],
+		keys_old[256],
+		keys_click[256];
 
 	void Response(void)
 	{
 		bool flag = false;
-		GetKeyboardState(Keys);
+		GetKeyboardState(keys);
 
 		for (int i = 0; i < 256; i++) {
-			if ((Keys[i] >> 7) != 0) {
+			if ((keys[i] >> 7) != 0) {
 				flag = true;
 			}
 		}
 
 		for (int i = 0; i < 256; i++) {
-			Keys[i] = (Keys[i] >> 7);
-			KeysClick[i] = Keys[i] && KeysOld[i];
+			keys[i] = (keys[i] >> 7);
+			keys_click[i] = keys[i] && keys_old[i];
 		}
 
-		memcpy(KeysOld, Keys, 256 * flag);
+		memcpy(keys_old, keys, 256 * flag);
 	}
 
 	keyboard(VOID) {
-		GetKeyboardState(Keys);
+		GetKeyboardState(keys);
 	}
 };
 
