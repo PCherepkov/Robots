@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'render.cpp'
- * LAST UPDATE: 12.10.2021
+ * LAST UPDATE: 19.10.2021
  */
 
 /* rendering functions */
@@ -18,10 +18,11 @@ void RenderInit(GLFWwindow* window) {
     up = ani.cam.GetUp();
 
   prim smth(std::vector<vertex>({
-    { vec3(-1, -1, 0), vec3(0), vec3(0, 1, 0), vec3(1, 0, 0) },
-    { vec3(-1, 1, 0), vec3(0), vec3(0, 1, 0), vec3(1, 0.25, 0.25) },
-    { vec3(1, 1, 0), vec3(0), vec3(0, 1, 0), vec3(0.25, 0.25, 0.25) }
-    }), std::vector<uint>({0, 1, 2}));
+    { vec3(-1, -1, 0), vec3(0), vec3(0, 1, 0), vec3(0.8) },
+    { vec3(-1, 1, 0), vec3(0), vec3(0, 1, 0), vec3(1, 0, 0) },
+    { vec3(1, 1, 0), vec3(0), vec3(0, 1, 0), vec3(0.8) },
+    { vec3(1, -1, 0), vec3(0), vec3(0, 1, 0), vec3(0.5, 0.25, 0.25) },
+    }), std::vector<uint>({0, 1, 3, 2}));
 
   ani.AddPrim(smth);
 }

@@ -34,6 +34,9 @@
     <Filter Include="Source Files\render\shaders">
       <UniqueIdentifier>{870806fb-11ee-4469-8e88-61ab93329b95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\render\shaders\default">
+      <UniqueIdentifier>{ff86c5fc-034f-4517-b9a5-8bb0b988dfc8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -101,5 +104,13 @@
     <ClInclude Include="rnd\prim.h">
       <Filter>Source Files\render</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="rnd\shd\DEFAULT\frag.glsl">
+      <Filter>Source Files\render\shaders\default</Filter>
+    </None>
+    <None Include="rnd\shd\DEFAULT\vert.glsl">
+      <Filter>Source Files\render\shaders\default</Filter>
+    </None>
   </ItemGroup>
 </Project>

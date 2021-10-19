@@ -22,14 +22,13 @@ int main(int argc, char* argv[]) {
     return 3;
 
   glfwSetFramebufferSizeCallback(window, Reshape);
+  glfwSetKeyCallback(window, Input);
 
   ani.cam.SetPos(vec3(0, 2, 2));
   ani.cam.SetAt(vec3(0));
 
   RenderInit(window);
   while (!glfwWindowShouldClose(window)) {
-    Input(window);
-
     Render(window);
 
     glfwSwapBuffers(window);

@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'gl_funcs.h'
- * LAST UPDATE: 10.10.2021
+ * LAST UPDATE: 18.10.2021
  */
 
 #pragma once
@@ -10,13 +10,6 @@
 #include "../def.h"
 
 void Reshape(GLFWwindow* window, int w, int h);
-void Input(GLFWwindow* window);
-
-// void Display(void);
-// void Idle(void);
-// void Keyboard(uchar key, int x, int y);
-// void Mouse(int button, int state, int x, int y);
-// void PassiveMotion(int x, int y);
-// void Motion(int x, int y);
+void Input(GLFWwindow* window, int key, int scancode, int action, int mods);
 
  /* END OF 'gl_funcs.h' FILE */

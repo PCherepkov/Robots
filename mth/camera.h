@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'camera.h'
- * LAST UPDATE: 12.10.2021
+ * LAST UPDATE: 18.10.2021
  */
 
 #pragma once
@@ -8,36 +8,68 @@
 /* camera and controls classes */
 
 #include "mth.h"
+#include <map>
 
 class keyboard
 {
 public:
-	byte
-		keys[256],
-		keys_old[256],
-		keys_click[256];
+	std::map<int, bool>
+		keys,
+		keys_old,
+		keys_click;
 
-	void Response(void)
+	void Response(GLFWwindow* window, int key, int scancode, int action, int mods)
 	{
-		bool flag = false;
-		GetKeyboardState(keys);
+		bool tmp = keys[key];
 
-		for (int i = 0; i < 256; i++) {
-			if ((keys[i] >> 7) != 0) {
-				flag = true;
-			}
+		if (action == GLFW_PRESS) {
+			keys[key] = 1;
+			keys_click[key] = 1;
 		}
+		if (action == GLFW_RELEASE)
+			keys[key] = 0;
+		if (action == GLFW_REPEAT || action == GLFW_RELEASE)
+			keys_click[key] = 0;
 
-		for (int i = 0; i < 256; i++) {
-			keys[i] = (keys[i] >> 7);
-			keys_click[i] = keys[i] && keys_old[i];
-		}
-
-		memcpy(keys_old, keys, 256 * flag);
+		keys_old[key] = tmp;
 	}
 
 	keyboard(VOID) {
-		GetKeyboardState(keys);
+		keys.insert(std::pair<int, bool>(32, 0));
+		keys_old.insert(std::pair<int, bool>(32, 0));
+		keys_click.insert(std::pair<int, bool>(32, 0));
+		keys.insert(std::pair<int, bool>(39, 0));
+		keys_old.insert(std::pair<int, bool>(39, 0));
+		keys_click.insert(std::pair<int, bool>(39, 0));
+		for (int i = 44; i < 58; i++)
+			keys.insert(std::pair<int, bool>(i, 0)), keys_old.insert(std::pair<int, bool>(i, 0)), keys_click.insert(std::pair<int, bool>(i, 0));
+		keys.insert(std::pair<int, bool>(59, 0));
+		keys_old.insert(std::pair<int, bool>(59, 0));
+		keys_click.insert(std::pair<int, bool>(59, 0));
+		keys.insert(std::pair<int, bool>(61, 0));
+		keys_old.insert(std::pair<int, bool>(61, 0));
+		keys_click.insert(std::pair<int, bool>(61, 0));
+		for (int i = 65; i < 94; i++)
+			keys.insert(std::pair<int, bool>(i, 0)), keys_old.insert(std::pair<int, bool>(i, 0)), keys_click.insert(std::pair<int, bool>(i, 0));
+		keys.insert(std::pair<int, bool>(96, 0));
+		keys_old.insert(std::pair<int, bool>(96, 0));
+		keys_click.insert(std::pair<int, bool>(96, 0));
+		keys.insert(std::pair<int, bool>(161, 0));
+		keys_old.insert(std::pair<int, bool>(161, 0));
+		keys_click.insert(std::pair<int, bool>(161, 0));
+		keys.insert(std::pair<int, bool>(162, 0));
+		keys_old.insert(std::pair<int, bool>(162, 0));
+		keys_click.insert(std::pair<int, bool>(162, 0));
+		for (int i = 256; i < 270; i++)
+			keys.insert(std::pair<int, bool>(i, 0)), keys_old.insert(std::pair<int, bool>(i, 0)), keys_click.insert(std::pair<int, bool>(i, 0));
+		for (int i = 280; i < 285; i++)
+			keys.insert(std::pair<int, bool>(i, 0)), keys_old.insert(std::pair<int, bool>(i, 0)), keys_click.insert(std::pair<int, bool>(i, 0));
+		for (int i = 290; i < 315; i++)
+			keys.insert(std::pair<int, bool>(i, 0)), keys_old.insert(std::pair<int, bool>(i, 0)), keys_click.insert(std::pair<int, bool>(i, 0));
+		for (int i = 320; i < 337; i++)
+			keys.insert(std::pair<int, bool>(i, 0)), keys_old.insert(std::pair<int, bool>(i, 0)), keys_click.insert(std::pair<int, bool>(i, 0));
+		for (int i = 340; i < 349; i++)
+			keys.insert(std::pair<int, bool>(i, 0)), keys_old.insert(std::pair<int, bool>(i, 0)), keys_click.insert(std::pair<int, bool>(i, 0));
 	}
 };
 

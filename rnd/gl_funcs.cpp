@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'gl_funcs.cpp'
- * LAST UPDATE: 12.10.2021
+ * LAST UPDATE: 18.10.2021
  */
 
 /* common glut handling functions */
@@ -23,14 +23,14 @@ void Reshape(GLFWwindow* window, int w, int h) {
 }
 
 
-void Input(GLFWwindow* window) {
-  ani.Response();
-  if (ani.keys[VK_ESCAPE])
+void Input(GLFWwindow* window, int key, int scancode, int action, int mods) {
+  ani.Response(window, key, scancode, action, mods);
+  if (ani.keys_click[GLFW_KEY_ESCAPE])
     glfwSetWindowShouldClose(window, true);
-  if (ani.keys_click['P'] || ani.keys_click['p']) {
+  if (ani.keys_click[GLFW_KEY_P]) {
     ani.is_pause = !ani.is_pause;
   }
-  if (ani.keys_click[VK_TAB]) {
+  if (ani.keys_click[GLFW_KEY_TAB]) {
     ani.is_wire_frame = !ani.is_wire_frame;
   }
 }

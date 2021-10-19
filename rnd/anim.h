@@ -27,8 +27,8 @@ public:
 	~anim() {
 	}
 
-	void Response(void) {
-		keyboard::Response();
+	void Response(GLFWwindow* window, int key, int scancode, int action, int mods) {
+		keyboard::Response(window, key, scancode, action, mods);
 	}
 
 	void Response(const int& newx, const int& newy) {
