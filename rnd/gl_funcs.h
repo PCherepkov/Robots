@@ -11,5 +11,6 @@
 
 void Reshape(GLFWwindow* window, int w, int h);
 void Input(GLFWwindow* window, int key, int scancode, int action, int mods);
+void SetWindow(int w, int h, bool is_full_screen);
 
  /* END OF 'gl_funcs.h' FILE */

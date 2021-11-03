@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'gl_funcs.cpp'
- * LAST UPDATE: 18.10.2021
+ * LAST UPDATE: 03.11.2021
  */
 
 /* common glut handling functions */
@@ -9,6 +9,29 @@
 #include "../def.h"
 #include "../utils/utils.h"
 #include "../ui/controls.h"
+
+void SetWindow(int w, int h, bool is_full_screen) {
+  if (ani.window != nullptr)
+    glfwDestroyWindow(ani.window);
+
+  if (is_full_screen)
+    ani.window = glfwCreateWindow(w, h, "Robots", glfwGetPrimaryMonitor(), NULL);
+  else
+    ani.window = glfwCreateWindow(w, h, "Robots", NULL, NULL);
+
+  if (ani.window == nullptr)
+    return;
+
+  glfwMakeContextCurrent(ani.window);
+  glfwSetFramebufferSizeCallback(ani.window, Reshape);
+  glfwSetKeyCallback(ani.window, Input);
+
+  if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    return;
+
+  RenderInit(ani.window);
+}
+
 
 void Reshape(GLFWwindow* window, int w, int h) {
   glViewport(0, 0, w, h);
@@ -25,13 +48,21 @@ void Reshape(GLFWwindow* window, int w, int h) {
 
 void Input(GLFWwindow* window, int key, int scancode, int action, int mods) {
   ani.Response(window, key, scancode, action, mods);
-  if (ani.keys_click[GLFW_KEY_ESCAPE])
-    glfwSetWindowShouldClose(window, true);
-  if (ani.keys_click[GLFW_KEY_P]) {
-    ani.is_pause = !ani.is_pause;
+  if (ani.keys_click[GLFW_KEY_ESCAPE]) {
+    glfwDestroyWindow(ani.window);
+    glfwTerminate();
+    ani.exit = true;
   }
-  if (ani.keys_click[GLFW_KEY_TAB]) {
+  if (ani.keys_click[GLFW_KEY_P])
+    ani.is_pause = !ani.is_pause;
+  if (ani.keys_click[GLFW_KEY_TAB])
     ani.is_wire_frame = !ani.is_wire_frame;
+  if (ani.keys_click[GLFW_KEY_F5]) {
+    ani.is_fullscreen = !ani.is_fullscreen;
+    if (ani.is_fullscreen)
+      SetWindow(1920, 1080, ani.is_fullscreen);
+    else
+      SetWindow(800, 800, ani.is_fullscreen);
   }
 }
 

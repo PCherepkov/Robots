@@ -17,11 +17,13 @@ extern anim ani;
 class anim : public camera, public timer, public keyboard, public mouse {
 	std::vector<prim> prims;
 public:
+	GLFWwindow* window;
 	int w, h;
 	camera cam;
-	bool is_wire_frame;
+	bool is_wire_frame, is_fullscreen, exit;
 
 	anim() {
+		window = nullptr;
 	}
 
 	~anim() {
