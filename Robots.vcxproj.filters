@@ -22,9 +22,6 @@
     <Filter Include="Source Files\levels">
       <UniqueIdentifier>{b9ee4d28-374b-4cae-8a38-12415066fb0e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\mth">
-      <UniqueIdentifier>{e4acb4de-2105-47d4-bfb9-09b839da4fad}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\utils">
       <UniqueIdentifier>{edff942c-14f0-4d8f-91b7-fddafa10e270}</UniqueIdentifier>
     </Filter>
@@ -36,6 +33,9 @@
     </Filter>
     <Filter Include="Source Files\render\shaders\default">
       <UniqueIdentifier>{ff86c5fc-034f-4517-b9a5-8bb0b988dfc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\camera">
+      <UniqueIdentifier>{e4acb4de-2105-47d4-bfb9-09b839da4fad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,9 +54,6 @@
     <ClCompile Include="ui\controls.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
-    <ClCompile Include="mth\matr.h">
-      <Filter>Source Files\mth</Filter>
-    </ClCompile>
     <ClCompile Include="glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -68,11 +65,8 @@
     <ClInclude Include="def.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="mth\mth.h">
-      <Filter>Source Files\mth</Filter>
-    </ClInclude>
     <ClInclude Include="mth\camera.h">
-      <Filter>Source Files\mth</Filter>
+      <Filter>Source Files\camera</Filter>
     </ClInclude>
     <ClInclude Include="utils\timer.h">
       <Filter>Source Files\utils</Filter>
@@ -91,12 +85,6 @@
     </ClInclude>
     <ClInclude Include="ui\controls.h">
       <Filter>Source Files\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="mth\vec.h">
-      <Filter>Source Files\mth</Filter>
-    </ClInclude>
-    <ClInclude Include="mth\mthdef.h">
-      <Filter>Source Files\mth</Filter>
     </ClInclude>
     <ClInclude Include="rnd\shd\shaders.h">
       <Filter>Source Files\render\shaders</Filter>

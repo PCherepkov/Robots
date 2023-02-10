@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'controls.cpp'
- * LAST UPDATE: 08.10.2021
+ * LAST UPDATE: 10.02.2023
  */
 
 /* control functions */
@@ -44,33 +44,33 @@ void FlyingWASD(void) {
     up = ani.cam.GetUp();
 
   if (ani.keys['W'] || ani.keys['w']) {
-    ani.cam.SetAt(at + dir / ani.fps);
-    ani.cam.SetPos(pos + dir / ani.fps);
+    ani.cam.SetAt(at + dir / (flt)ani.fps);
+    ani.cam.SetPos(pos + dir / (flt)ani.fps);
   }
 
   if (ani.keys['S'] || ani.keys['s']) {
-    ani.cam.SetAt(at - dir / ani.fps);
-    ani.cam.SetPos(pos - dir / ani.fps);
+    ani.cam.SetAt(at - dir / (flt)ani.fps);
+    ani.cam.SetPos(pos - dir / (flt)ani.fps);
   }
 
   if (ani.keys['D'] || ani.keys['d']) {
-    ani.cam.SetAt(at + right / ani.fps);
-    ani.cam.SetPos(pos + right / ani.fps);
+    ani.cam.SetAt(at + right / (flt)ani.fps);
+    ani.cam.SetPos(pos + right / (flt)ani.fps);
   }
 
   if (ani.keys['A'] || ani.keys['a']) {
-    ani.cam.SetAt(at - right / ani.fps);
-    ani.cam.SetPos(pos - right / ani.fps);
+    ani.cam.SetAt(at - right / (flt)ani.fps);
+    ani.cam.SetPos(pos - right / (flt)ani.fps);
   }
 
   if (ani.keys[VK_SHIFT]) {
-    ani.cam.SetAt(at - up / ani.fps);
-    ani.cam.SetPos(pos - up / ani.fps);
+    ani.cam.SetAt(at - up / (flt)ani.fps);
+    ani.cam.SetPos(pos - up / (flt)ani.fps);
   }
 
   if (ani.keys[VK_SPACE]) {
-    ani.cam.SetAt(at + up / ani.fps);
-    ani.cam.SetPos(pos + up / ani.fps);
+    ani.cam.SetAt(at + up / (flt)ani.fps);
+    ani.cam.SetPos(pos + up / (flt)ani.fps);
   }
 
   // Head();

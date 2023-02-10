@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'anim.h'
- * LAST UPDATE: 12.10.2021
+ * LAST UPDATE: 10.02.2023
  */
 
 #pragma once
@@ -9,6 +9,7 @@
 
 #include "../utils/timer.h"
 #include "prim.h"
+#include "../mth/camera.h"
 
 class anim;
 

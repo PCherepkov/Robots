@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'main.cpp'
- * LAST UPDATE: 28.10.2021
+ * LAST UPDATE: 10.02.2023
  */
 
 #include "def.h"
@@ -8,11 +8,11 @@
 
 anim ani;
 
-int main(int argc, char* argv[]) {
+int main(int argc, char* argv[]) {  
   if (!glfwInit())
     return 1;
 
-  SetWindow(800, 800, false);
+  SetWindow(1920, 1080, false);
 
   ani.cam.SetPos(vec3(0, 2, 2));
   ani.cam.SetAt(vec3(0));

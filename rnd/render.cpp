@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'render.cpp'
- * LAST UPDATE: 19.10.2021
+ * LAST UPDATE: 10.02.2023
  */
 
 /* rendering functions */
@@ -12,18 +12,25 @@
 #define END   } glPopMatrix();
 
 void RenderInit(GLFWwindow* window) {
-  vec3
-    pos = ani.cam.GetPos(),
-    at = ani.cam.GetAt(),
-    up = ani.cam.GetUp();
-
   prim smth(std::vector<vertex>({
-    { vec3(-1, -1, 0), vec3(0), vec3(0, 1, 0), vec3(0.8) },
-    { vec3(-1, 1, 0), vec3(0), vec3(0, 1, 0), vec3(1, 0, 0) },
-    { vec3(1, 1, 0), vec3(0), vec3(0, 1, 0), vec3(0.8) },
-    { vec3(1, -1, 0), vec3(0), vec3(0, 1, 0), vec3(0.5, 0.25, 0.25) },
+    { vec3(-1, -1, 0), vec3(0), vec3(0, 1, 0), vec3(1, 0, 0) },
+    { vec3(-1, 1, 0), vec3(0), vec3(0, 1, 0), vec3(1, 1, 0) },
+    { vec3(1, 1, 0), vec3(0), vec3(0, 1, 0), vec3(0, 0, 1) },
+    { vec3(1, -1, 0), vec3(0), vec3(0, 1, 0), vec3(1, 0, 1) },
     }), std::vector<uint>({0, 1, 3, 2}));
 
+  glm::mat4 model = glm::mat4(1.0f);
+  model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+  
+  glm::mat4 view = glm::mat4(1.0f);
+  view = glm::translate(view, glm::vec3(0.0f, -1.0f, -3.0f));
+
+  glm::mat4 projection = glm::mat4(1.0f);
+  projection = glm::perspective(glm::radians(60.0f), (float)ani.w / (float)ani.h, 0.1f, 1000.0f);
+  
+  smth.projection = projection;
+  smth.view = view;
+  smth.model = model;
   ani.AddPrim(smth);
 }
 
@@ -44,6 +51,10 @@ void Render(GLFWwindow* window) {
 
   /* debug output */
 #if 0
+  vec3
+      pos = ani.cam.GetPos(),
+      at = ani.cam.GetAt(),
+      up = ani.cam.GetUp();
   BEGIN
   {
     gluLookAt(pos[0], pos[1], pos[2], at[0], at[1], at[2], 0, 1, 0);

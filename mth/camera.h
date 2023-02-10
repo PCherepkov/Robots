@@ -1,14 +1,14 @@
 /* Property of Cherepkov Petr
  * FILE: 'camera.h'
- * LAST UPDATE: 18.10.2021
+ * LAST UPDATE: 10.02.2023
  */
 
 #pragma once
 
 /* camera and controls classes */
 
-#include "mth.h"
 #include <map>
+#include "..\def.h"
 
 class keyboard
 {
@@ -34,7 +34,7 @@ public:
 		keys_old[key] = tmp;
 	}
 
-	keyboard(VOID) {
+	keyboard(void) {
 		keys.insert(std::pair<int, bool>(32, 0));
 		keys_old.insert(std::pair<int, bool>(32, 0));
 		keys_click.insert(std::pair<int, bool>(32, 0));
@@ -121,7 +121,7 @@ public:
 	}
 
 	void SetElev(dbl new_elev) {
-		if (new_elev < 0.99 * PI && new_elev > 0.01) {
+		if (new_elev < 0.99 * pi<dbl>() && new_elev > 0.01) {
 			elev_angle = new_elev;
 		}
 	}
@@ -132,8 +132,8 @@ public:
 
 	void SetPos(vec3 Loc) {
 		pos = Loc;
-		right = ((at - pos) % vec3(0, 1, 0)).Normalizing();
-		up = (right % (at - pos)).Normalizing();
+		right = normalize(cross((at - pos), vec3(0.0, 1.0, 0.0)) );
+		up = normalize(cross(right, (at - pos)));
 	}
 
 	vec3 GetPos(void) {
@@ -142,8 +142,8 @@ public:
 
 	void SetAt(vec3 Look) {
 		at = Look;
-		right = ((at - pos) % vec3(0, 1, 0)).Normalizing();
-		up = (right % (at - pos)).Normalizing();
+		right = normalize(cross((at - pos), vec3(0.0, 1.0, 0.0)));
+		up = normalize(cross(right, (at - pos)));
 	}
 
 	vec3 GetAt(void) {
@@ -159,7 +159,13 @@ public:
 	}
 
 	vec3 GetDir(void) {
-		return (at - pos).Normalizing();
+		return normalize(at - pos);
+	}
+
+	glm::mat4 GetView(void) {
+		return glm::lookAt(glm::vec3(pos[0], pos[1], pos[2]),
+						   glm::vec3(at[0], at[1], at[2]),
+			               glm::vec3(up[0], up[1], up[2]));
 	}
 };
 

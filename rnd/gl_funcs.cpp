@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'gl_funcs.cpp'
- * LAST UPDATE: 03.11.2021
+ * LAST UPDATE: 10.02.2023
  */
 
 /* common glut handling functions */
@@ -29,6 +29,7 @@ void SetWindow(int w, int h, bool is_full_screen) {
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     return;
 
+  ani.w = w, ani.h = h;
   RenderInit(ani.window);
 }
 

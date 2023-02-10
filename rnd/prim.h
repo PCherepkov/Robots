@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'prim.h'
- * LAST UPDATE: 19.10.2021
+ * LAST UPDATE: 10.02.2023
  */
 
 #pragma once
@@ -31,6 +31,7 @@ public:
   std::vector<vertex> verts;  
   std::vector<uint> inds;
   shader* shd;
+  glm::mat4 projection, view, model;
 
   prim() {
     shd = new shader("rnd/shd/DEFAULT/");
@@ -92,9 +93,14 @@ public:
   ~prim() {
   }
 
-  VOID Draw(VOID) {
+  void Draw(void) {
     glUseProgram(shd->prg);
+    
     glUniform1f(glGetUniformLocation(shd->prg, "time"), (flt)glfwGetTime());
+	glUniformMatrix4fv(glGetUniformLocation(shd->prg, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	glUniformMatrix4fv(glGetUniformLocation(shd->prg, "view"), 1, GL_FALSE, glm::value_ptr(view));
+	glUniformMatrix4fv(glGetUniformLocation(shd->prg, "model"), 1, GL_FALSE, glm::value_ptr(model));
+    
     glBindVertexArray(vao);
     glDrawElements(prim_type, verts.size(), GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
