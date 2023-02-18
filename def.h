@@ -1,9 +1,17 @@
 /* Property of Cherepkov Petr
  * FILE: 'def.h'
- * LAST UPDATE: 10.02.2023
+ * LAST UPDATE: 16.02.2023
  */
 
 #pragma once
+
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+#ifdef _DEBUG
+#define DEBUG_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#define new DEBUG_NEW
+#endif
 
 #include <cstdio>
 #include <ctime>
@@ -11,6 +19,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <string>
+#include <vector>
 #include <Windows.h>
 
 #pragma comment(lib, "legacy_stdio_definitions.lib")
@@ -33,6 +42,8 @@ typedef unsigned char uchar;
 typedef unsigned char byte;
 typedef double dbl;
 typedef float flt;
+
+#define PI 3.14159265358979323846
 
 #define MAX_TEXTURES 10
 

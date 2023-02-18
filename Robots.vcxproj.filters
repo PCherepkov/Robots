@@ -37,6 +37,9 @@
     <Filter Include="Source Files\camera">
       <UniqueIdentifier>{e4acb4de-2105-47d4-bfb9-09b839da4fad}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\render\topology">
+      <UniqueIdentifier>{eb61c5f9-d6de-4784-ad88-7d513741ce9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="rnd\prim.h">
       <Filter>Source Files\render</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd\topology\topology.h">
+      <Filter>Source Files\render\topology</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

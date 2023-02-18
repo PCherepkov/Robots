@@ -164,6 +164,7 @@
     <ClInclude Include="rnd\prim.h" />
     <ClInclude Include="rnd\render.h" />
     <ClInclude Include="rnd\shd\shaders.h" />
+    <ClInclude Include="rnd\topology\topology.h" />
     <ClInclude Include="ui\controls.h" />
     <ClInclude Include="utils\timer.h" />
     <ClInclude Include="utils\utils.h" />

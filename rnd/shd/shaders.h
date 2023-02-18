@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include <vector>
 #include <fstream>
 
 #include "../../def.h"
@@ -19,7 +18,7 @@ public:
   ~shader() {
   }
 
-  shader(const std::string& name) {
+  shader(const string& name) {
     /* loading data for shaders */
     ifstream
       f(name + "frag.glsl", ios::in),
@@ -28,7 +27,7 @@ public:
     // v.open(/*name + "../rnd/shd/DEFAULT/vert.glsl"*/ "tmp.txt");
 
     if (f.fail() || v.fail()) {
-      std::cout << "Error while shader source loading";
+      cout << "Error while shader source loading";
       f.close();
       v.close();
       return;
@@ -36,7 +35,7 @@ public:
 
     uint vert_id, frag_id;
 
-    std::string src;
+    string src;
     char buf[256];
     while (!f.eof()) {
       f.getline(buf, 256);
@@ -73,7 +72,7 @@ public:
     glGetShaderiv(vert_id, GL_COMPILE_STATUS, &status);
     if (!status) {
       glGetShaderInfoLog(vert_id, 512, NULL, log);
-      std::cout << "vertex shader compilation error\n" << log << std::endl;
+      cout << "vertex shader compilation error\n" << log << endl;
       return;
     }
 
@@ -86,7 +85,7 @@ public:
     glGetShaderiv(frag_id, GL_COMPILE_STATUS, &status);
     if (!status) {
       glGetShaderInfoLog(frag_id, 512, NULL, log);
-      std::cout << "fragment shader compilation error\n" << log << std::endl;
+      cout << "fragment shader compilation error\n" << log << endl;
       return;
     }
 
@@ -100,13 +99,14 @@ public:
     glGetProgramiv(prg, GL_LINK_STATUS, &status);
     if (!status) {
       glGetProgramInfoLog(prg, 512, NULL, log);
-      std::cout << "linking error\n" << log << std::endl;
+      cout << "linking error\n" << log << endl;
       return;
     }
 
     /* shader objects deleting */
     glDeleteShader(vert_id);
     glDeleteShader(frag_id);
+    delete fsrc;
   }
 };
 

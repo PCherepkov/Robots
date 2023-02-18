@@ -7,6 +7,7 @@
 
  /* common header file for rendering */
 
+#include "topology/topology.h"
 #include "anim.h"
 #include "gl_funcs.h"
 #include "prim.h"

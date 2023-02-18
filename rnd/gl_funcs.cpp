@@ -24,12 +24,17 @@ void SetWindow(int w, int h, bool is_full_screen) {
 
   glfwMakeContextCurrent(ani.window);
   glfwSetFramebufferSizeCallback(ani.window, Reshape);
-  glfwSetKeyCallback(ani.window, Input);
+  glfwSetKeyCallback(ani.window, KeyboardInput);
+  glfwSetCursorPosCallback(ani.window, MouseInput);
+  glfwSetMouseButtonCallback(ani.window, MouseButtonsInput);
+  glfwSetScrollCallback(ani.window, MouseScrollInput);
+  glfwSetInputMode(ani.window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     return;
 
   ani.w = w, ani.h = h;
+  glfwGetCursorPos(ani.window, &ani.x, &ani.y);
   RenderInit(ani.window);
 }
 
@@ -39,7 +44,6 @@ void Reshape(GLFWwindow* window, int w, int h) {
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  // gluPerspective(60, 1.0 * w / h, 0.1, 1000);
   glMatrixMode(GL_MODELVIEW);
 
   ani.w = w;
@@ -47,7 +51,26 @@ void Reshape(GLFWwindow* window, int w, int h) {
 }
 
 
-void Input(GLFWwindow* window, int key, int scancode, int action, int mods) {
+void MouseScrollInput(GLFWwindow* window, double xoffset, double yoffset) {
+	ani.scrollX = xoffset;
+	ani.scrollY = yoffset;
+}
+
+
+void MouseButtonsInput(GLFWwindow* window, int button, int action, int mods) {
+    if (action == GLFW_PRESS)
+        ani.buttons[button] = 1;
+    if (action == GLFW_RELEASE)
+        ani.buttons[button] = 0;
+}
+
+
+void MouseInput(GLFWwindow* window, double xpos, double ypos) {
+	ani.Response(xpos, ypos);
+}
+
+
+void KeyboardInput(GLFWwindow* window, int key, int scancode, int action, int mods) {
   ani.Response(window, key, scancode, action, mods);
   if (ani.keys_click[GLFW_KEY_ESCAPE]) {
     glfwDestroyWindow(ani.window);
@@ -95,7 +118,7 @@ void Keyboard(uchar key, int x, int y) {
 
 
 void Idle(void) {
-  ani.UpdateTimer();
+  ani.UpdateTimer(ani.pause);
   ani.Response();
   FlyingWASD();
 }

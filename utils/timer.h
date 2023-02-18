@@ -25,10 +25,11 @@ public:
 	~timer() {
 	}
 
-	void UpdateTimer(void) {
-		dbl new_time = (dbl)clock() / CLOCKS_PER_SEC;
+	void UpdateTimer(bool pause) {
+		dbl new_time = (dbl)glfwGetTime();
 		delta_time = new_time - time;
-		time = new_time;
+		if (!pause)
+			time = new_time;
 		fps = 1 / delta_time;
 	}
 };

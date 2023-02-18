@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'camera.h'
- * LAST UPDATE: 10.02.2023
+ * LAST UPDATE: 18.02.2023
  */
 
 #pragma once
@@ -13,7 +13,7 @@
 class keyboard
 {
 public:
-	std::map<int, bool>
+	map<int, bool>
 		keys,
 		keys_old,
 		keys_click;
@@ -26,6 +26,8 @@ public:
 			keys[key] = 1;
 			keys_click[key] = 1;
 		}
+		if (action == GLFW_REPEAT)
+			keys[key] = 1;
 		if (action == GLFW_RELEASE)
 			keys[key] = 0;
 		if (action == GLFW_REPEAT || action == GLFW_RELEASE)
@@ -35,56 +37,30 @@ public:
 	}
 
 	keyboard(void) {
-		keys.insert(std::pair<int, bool>(32, 0));
-		keys_old.insert(std::pair<int, bool>(32, 0));
-		keys_click.insert(std::pair<int, bool>(32, 0));
-		keys.insert(std::pair<int, bool>(39, 0));
-		keys_old.insert(std::pair<int, bool>(39, 0));
-		keys_click.insert(std::pair<int, bool>(39, 0));
-		for (int i = 44; i < 58; i++)
-			keys.insert(std::pair<int, bool>(i, 0)), keys_old.insert(std::pair<int, bool>(i, 0)), keys_click.insert(std::pair<int, bool>(i, 0));
-		keys.insert(std::pair<int, bool>(59, 0));
-		keys_old.insert(std::pair<int, bool>(59, 0));
-		keys_click.insert(std::pair<int, bool>(59, 0));
-		keys.insert(std::pair<int, bool>(61, 0));
-		keys_old.insert(std::pair<int, bool>(61, 0));
-		keys_click.insert(std::pair<int, bool>(61, 0));
-		for (int i = 65; i < 94; i++)
-			keys.insert(std::pair<int, bool>(i, 0)), keys_old.insert(std::pair<int, bool>(i, 0)), keys_click.insert(std::pair<int, bool>(i, 0));
-		keys.insert(std::pair<int, bool>(96, 0));
-		keys_old.insert(std::pair<int, bool>(96, 0));
-		keys_click.insert(std::pair<int, bool>(96, 0));
-		keys.insert(std::pair<int, bool>(161, 0));
-		keys_old.insert(std::pair<int, bool>(161, 0));
-		keys_click.insert(std::pair<int, bool>(161, 0));
-		keys.insert(std::pair<int, bool>(162, 0));
-		keys_old.insert(std::pair<int, bool>(162, 0));
-		keys_click.insert(std::pair<int, bool>(162, 0));
-		for (int i = 256; i < 270; i++)
-			keys.insert(std::pair<int, bool>(i, 0)), keys_old.insert(std::pair<int, bool>(i, 0)), keys_click.insert(std::pair<int, bool>(i, 0));
-		for (int i = 280; i < 285; i++)
-			keys.insert(std::pair<int, bool>(i, 0)), keys_old.insert(std::pair<int, bool>(i, 0)), keys_click.insert(std::pair<int, bool>(i, 0));
-		for (int i = 290; i < 315; i++)
-			keys.insert(std::pair<int, bool>(i, 0)), keys_old.insert(std::pair<int, bool>(i, 0)), keys_click.insert(std::pair<int, bool>(i, 0));
-		for (int i = 320; i < 337; i++)
-			keys.insert(std::pair<int, bool>(i, 0)), keys_old.insert(std::pair<int, bool>(i, 0)), keys_click.insert(std::pair<int, bool>(i, 0));
-		for (int i = 340; i < 349; i++)
-			keys.insert(std::pair<int, bool>(i, 0)), keys_old.insert(std::pair<int, bool>(i, 0)), keys_click.insert(std::pair<int, bool>(i, 0));
-	}
+		for (int i = 0; i < 1024; i++) {
+			keys[i] = false;
+			keys_old[i] = false;
+			keys_click[i] = false;
+		}
+	};
 };
 
 class mouse {
 public:
-	int x, y, dx, dy;
-	int button, state;
+	dbl x, y, dx, dy;
+	int buttons[3];
+	dbl scrollX, scrollY;
 
-	mouse() : x(-1), y(-1) {
+	mouse() {
+		x = y = dx = dy = 0;
+		buttons[0] = buttons[1] = buttons[2] = 0;
+		scrollX = scrollY = 0;
 	}
 
 	~mouse() {
 	}
 
-	void Response(int newx, int newy) {
+	void Response(dbl newx, dbl newy) {
 		dx = newx - x;
 		dy = newy - y;
 		x = newx;
@@ -99,6 +75,10 @@ private:
 	dbl dist;
 public:
 	camera() {
+		pos = vec3(0, 0, 1);
+		at = vec3(0);
+		up = vec3(0, 1, 0);
+		right = vec3(1, 0, 0);
 	}
 
 	~camera() {
@@ -121,7 +101,7 @@ public:
 	}
 
 	void SetElev(dbl new_elev) {
-		if (new_elev < 0.99 * pi<dbl>() && new_elev > 0.01) {
+		if (new_elev < 0.99 * PI && new_elev > 0.01 * PI) {
 			elev_angle = new_elev;
 		}
 	}
@@ -132,8 +112,9 @@ public:
 
 	void SetPos(vec3 Loc) {
 		pos = Loc;
-		right = normalize(cross((at - pos), vec3(0.0, 1.0, 0.0)) );
+		right = normalize(cross((at - pos), vec3(0.0, 1.0, 0.0)));
 		up = normalize(cross(right, (at - pos)));
+		elev_angle = acos(dot(normalize(at - pos), vec3(0, 1, 0)));
 	}
 
 	vec3 GetPos(void) {
@@ -144,6 +125,7 @@ public:
 		at = Look;
 		right = normalize(cross((at - pos), vec3(0.0, 1.0, 0.0)));
 		up = normalize(cross(right, (at - pos)));
+		elev_angle = acos(dot(normalize(at - pos), vec3(0, 1, 0)));
 	}
 
 	vec3 GetAt(void) {
@@ -162,10 +144,8 @@ public:
 		return normalize(at - pos);
 	}
 
-	glm::mat4 GetView(void) {
-		return glm::lookAt(glm::vec3(pos[0], pos[1], pos[2]),
-						   glm::vec3(at[0], at[1], at[2]),
-			               glm::vec3(up[0], up[1], up[2]));
+	mat4 GetView(void) {
+		return lookAt(pos, at, up);
 	}
 };
 

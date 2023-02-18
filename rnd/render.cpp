@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'render.cpp'
- * LAST UPDATE: 10.02.2023
+ * LAST UPDATE: 18.02.2023
  */
 
 /* rendering functions */
@@ -12,42 +12,58 @@
 #define END   } glPopMatrix();
 
 void RenderInit(GLFWwindow* window) {
-  prim smth(std::vector<vertex>({
-    { vec3(-1, -1, 0), vec3(0), vec3(0, 1, 0), vec3(1, 0, 0) },
-    { vec3(-1, 1, 0), vec3(0), vec3(0, 1, 0), vec3(1, 1, 0) },
-    { vec3(1, 1, 0), vec3(0), vec3(0, 1, 0), vec3(0, 0, 1) },
-    { vec3(1, -1, 0), vec3(0), vec3(0, 1, 0), vec3(1, 0, 1) },
-    }), std::vector<uint>({0, 1, 3, 2}));
-
-  glm::mat4 model = glm::mat4(1.0f);
-  model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-  
-  glm::mat4 view = glm::mat4(1.0f);
-  view = glm::translate(view, glm::vec3(0.0f, -1.0f, -3.0f));
-
-  glm::mat4 projection = glm::mat4(1.0f);
-  projection = glm::perspective(glm::radians(60.0f), (float)ani.w / (float)ani.h, 0.1f, 1000.0f);
-  
-  smth.projection = projection;
-  smth.view = view;
-  smth.model = model;
-  ani.AddPrim(smth);
+    vector<vertex> v;
+    vector<uint> i;
+    // topo::sphere<vertex>(v, i, 1, 30, 30);
+    topo::grid<vertex>(v, i, 10, 10, 4, 4);
+    prim* smth = new prim(v, i);
+    
+    mat4 model = mat4(1.0f);
+    model = rotate(model, radians(45.0f * 0), vec3(1, 0, 0));
+    
+    mat4 view = mat4(1.0f);
+    view = translate(view, vec3(0.0f, -0.5f, -2.0f));
+    
+    mat4 projection = mat4(1.0f);
+    projection = perspective(radians(90.0f), (float)ani.w / (float)ani.h, 0.1f, 1000.0f);
+    
+    smth->projection = projection;
+    smth->view = view;
+    smth->model = model;
+    
+    ani.AddPrim(smth);
 }
 
 void Render(GLFWwindow* window) {
-  glClearColor(0.17, 0.1603, 0.209, 1);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(0.17, 0.1603, 0.209, 1);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    if (ani.is_wire_frame)
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    else
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    
+    vector<prim*> prs;
+    ani.GetPrims(&prs);
+    for (auto pr : prs) {
+        ani.Shader(pr);
+        pr->view = ani.cam.GetView();
+        pr->Draw();
+    }
 
-  if (anim::GetRef().is_wire_frame)
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  else
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-  std::vector<prim> prs;
-  ani.GetPrims(&prs);
-  for (auto pr : prs) {
-    pr.Draw();
-  }
+    vector<vertex> v;
+    vector<uint> i;
+    topo::sphere<vertex>(v, i, 0.08, 8, 8);
+    prim at_prim(v, i);
+    at_prim.projection = perspective(radians(90.0f), (float)ani.w / (float)ani.h, 0.1f, 1000.0f);
+    at_prim.view = translate(mat4(1.0f), vec3(0.0f, -0.5f, -2.0f));
+    at_prim.model = translate(mat4(1.0f), vec3(ani.cam.GetAt()));
+    ani.Shader(&at_prim);
+    at_prim.Draw();
+    
+    ani.UpdateTimer(ani.is_pause);
+    FlyingWASD();
+    ani.dx = ani.dy = 0;
 
   /* debug output */
 #if 0
