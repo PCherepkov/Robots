@@ -1,10 +1,11 @@
 /* Property of Cherepkov Petr
  * FILE: 'main.cpp'
- * LAST UPDATE: 16.02.2023
+ * LAST UPDATE: 20.02.2023
  */
 
 
 #include "def.h"
+
 #include "main.h"
 
 anim ani;
@@ -24,6 +25,7 @@ int main(int argc, char* argv[]) {
     ani.exit = false;
     
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_TEXTURE_2D);
     glPointSize(5);
     while (!ani.exit) {
         Render(ani.window);

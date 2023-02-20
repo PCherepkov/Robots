@@ -40,6 +40,9 @@
     <Filter Include="Source Files\render\topology">
       <UniqueIdentifier>{eb61c5f9-d6de-4784-ad88-7d513741ce9b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\render\textures">
+      <UniqueIdentifier>{52a86c97-fc85-4e33-afb3-71f7364004ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -59,6 +62,9 @@
     </ClCompile>
     <ClCompile Include="glad.c">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rnd\textures\texture.cpp">
+      <Filter>Source Files\render\textures</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +103,9 @@
     </ClInclude>
     <ClInclude Include="rnd\topology\topology.h">
       <Filter>Source Files\render\topology</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd\textures\textures.h">
+      <Filter>Source Files\render\textures</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -31,6 +31,8 @@ void RenderInit(GLFWwindow* window) {
     smth->view = view;
     smth->model = model;
     
+    ani.SetTexture(smth, "src/wall.jpg");
+
     ani.AddPrim(smth);
 }
 
@@ -46,7 +48,6 @@ void Render(GLFWwindow* window) {
     vector<prim*> prs;
     ani.GetPrims(&prs);
     for (auto pr : prs) {
-        ani.Shader(pr);
         pr->view = ani.cam.GetView();
         pr->Draw();
     }

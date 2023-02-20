@@ -5,6 +5,7 @@ layout (location = 2) in vec3 norm;
 layout (location = 3) in vec2 tex;
 
 out vec4 vertex_color;
+out vec2 tex_coord;
 
 uniform float time;
 uniform mat4 projection;
@@ -38,4 +39,5 @@ void main() {
   // vertex_color = vec4(vec3(dot(norm, normalize(vec3(1)))), 1.0);
   // vertex_color = vec4(norm, 1.0);
   vertex_color = vec4(tex, 0.0, 1.0);
+  tex_coord = tex;
 }

@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'gl_funcs.cpp'
- * LAST UPDATE: 10.02.2023
+ * LAST UPDATE: 20.02.2023
  */
 
 /* common glut handling functions */
@@ -141,4 +141,4 @@ void Motion(int x, int y) {
 }
 #endif
 
- /* END OF 'gl_funcs.cpp' FILE */
+/* END OF 'gl_funcs.cpp' FILE */

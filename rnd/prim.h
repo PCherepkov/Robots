@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'prim.h'
- * LAST UPDATE: 18.02.2023
+ * LAST UPDATE: 20.02.2023
  */
 
 #pragma once
@@ -10,6 +10,7 @@
 #include "../def.h"
 #include "shd/shaders.h"
 #include "render.h"
+#include "textures/textures.h"
 
 class anim;
 
@@ -36,10 +37,12 @@ public:
     vector<vertex> verts;  
     vector<uint> inds;
     shader* shd;
+    tex* texture;
     mat4 projection, view, model;
 
     prim() {
-        shd = nullptr; // new shader("rnd/shd/DEFAULT/");
+        shd = nullptr;
+        texture = nullptr;
         model = mat4(1.0f);
         view = mat4(1.0f);
         projection = mat4(1.0f);
@@ -50,50 +53,52 @@ public:
         prim_type = GL_TRIANGLE_STRIP;
         verts = vcs;
         inds = indxs;
-        shd = nullptr; // new shader("rnd/shd/DEFAULT/");
+        shd = nullptr;
+        texture = nullptr;
         glGenBuffers(1, &vbo);
         glGenBuffers(1, &ebo);
         glGenVertexArrays(1, &vao);
         
-        flt* vertices = new flt[vcs.size() * 12];
+        int stride = 12;
+        flt* vertices = new flt[vcs.size() * stride];
         for (uint i = 0; i < vcs.size(); i++) {
-            vertices[i * 12 + 0] = (flt)vcs[i].p[0];
-            vertices[i * 12 + 1] = (flt)vcs[i].p[1];
-            vertices[i * 12 + 2] = (flt)vcs[i].p[2];
+            vertices[i * stride + 0] = (flt)vcs[i].p[0];
+            vertices[i * stride + 1] = (flt)vcs[i].p[1];
+            vertices[i * stride + 2] = (flt)vcs[i].p[2];
             
-            vertices[i * 12 + 3] = (flt)vcs[i].c[0];
-            vertices[i * 12 + 4] = (flt)vcs[i].c[1];
-            vertices[i * 12 + 5] = (flt)vcs[i].c[2];
-            vertices[i * 12 + 6] = (flt)vcs[i].c[3];
+            vertices[i * stride + 3] = (flt)vcs[i].c[0];
+            vertices[i * stride + 4] = (flt)vcs[i].c[1];
+            vertices[i * stride + 5] = (flt)vcs[i].c[2];
+            vertices[i * stride + 6] = (flt)vcs[i].c[3];
             
-            vertices[i * 12 + 7] = (flt)vcs[i].n[0];
-            vertices[i * 12 + 8] = (flt)vcs[i].n[1];
-            vertices[i * 12 + 9] = (flt)vcs[i].n[2];
+            vertices[i * stride + 7] = (flt)vcs[i].n[0];
+            vertices[i * stride + 8] = (flt)vcs[i].n[1];
+            vertices[i * stride + 9] = (flt)vcs[i].n[2];
             
-            vertices[i * 12 + 10] = (flt)vcs[i].t[0];
-            vertices[i * 12 + 11] = (flt)vcs[i].t[1];
+            vertices[i * stride + 10] = (flt)vcs[i].t[0];
+            vertices[i * stride + 11] = (flt)vcs[i].t[1];
         }
         
         glBindVertexArray(vao);
         
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, vcs.size() * 12 * sizeof(flt), vertices, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, vcs.size() * stride * sizeof(flt), vertices, GL_STATIC_DRAW);
         delete vertices;
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, inds.size() * sizeof(uint), inds.data(), GL_STATIC_DRAW);
         
         // position
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 12 * sizeof(flt), (void*)0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride * sizeof(flt), (void*)0);
         glEnableVertexAttribArray(0);
         // color
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 12 * sizeof(flt), (void*)(3 * sizeof(flt)));
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, stride * sizeof(flt), (void*)(3 * sizeof(flt)));
         glEnableVertexAttribArray(1);
         // normal
-        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 12 * sizeof(flt), (void*)(7 * sizeof(flt)));
+        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, stride * sizeof(flt), (void*)(7 * sizeof(flt)));
         glEnableVertexAttribArray(2);
         // texture
-        glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, 12 * sizeof(flt), (void*)(10 * sizeof(flt)));
+        glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, stride * sizeof(flt), (void*)(10 * sizeof(flt)));
         glEnableVertexAttribArray(3);
         
         glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -113,6 +118,7 @@ public:
 	    glUniformMatrix4fv(glGetUniformLocation(shd->prg, "view"), 1, GL_FALSE, value_ptr(view));
 	    glUniformMatrix4fv(glGetUniformLocation(shd->prg, "model"), 1, GL_FALSE, value_ptr(model));
         
+        glBindTexture(GL_TEXTURE_2D, texture->code);
         glBindVertexArray(vao);
         glDrawElements(prim_type, verts.size(), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);

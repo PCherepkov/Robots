@@ -152,6 +152,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="rnd\gl_funcs.cpp" />
     <ClCompile Include="rnd\render.cpp" />
+    <ClCompile Include="rnd\textures\texture.cpp" />
     <ClCompile Include="ui\controls.cpp" />
     <ClCompile Include="utils\utils.cpp" />
   </ItemGroup>
@@ -164,6 +165,7 @@
     <ClInclude Include="rnd\prim.h" />
     <ClInclude Include="rnd\render.h" />
     <ClInclude Include="rnd\shd\shaders.h" />
+    <ClInclude Include="rnd\textures\textures.h" />
     <ClInclude Include="rnd\topology\topology.h" />
     <ClInclude Include="ui\controls.h" />
     <ClInclude Include="utils\timer.h" />
