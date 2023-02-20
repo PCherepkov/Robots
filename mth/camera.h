@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'camera.h'
- * LAST UPDATE: 18.02.2023
+ * LAST UPDATE: 20.02.2023
  */
 
 #pragma once
@@ -71,8 +71,7 @@ public:
 class camera {
 private:
 	vec3 pos, at, up, right;
-	dbl elev_angle, rot_angle;
-	dbl dist;
+	dbl elev_angle;
 public:
 	camera() {
 		pos = vec3(0, 0, 1);
@@ -84,37 +83,15 @@ public:
 	~camera() {
 	}
 
-	void SetDist(dbl new_dist) {
-		dist = new_dist;
-	}
-
-	dbl GetDist(void) {
-		return dist;
-	}
-
-	void SetRot(dbl new_rot) {
-		rot_angle = new_rot;
-	}
-
-	dbl GetRot(void) {
-		return rot_angle;
-	}
-
-	void SetElev(dbl new_elev) {
-		if (new_elev < 0.99 * PI && new_elev > 0.01 * PI) {
-			elev_angle = new_elev;
-		}
-	}
-
 	dbl GetElev(void) {
+		elev_angle = acos(dot(normalize(at - pos), vec3(0, 1, 0)));
 		return elev_angle;
 	}
 
 	void SetPos(vec3 Loc) {
 		pos = Loc;
-		right = normalize(cross((at - pos), vec3(0.0, 1.0, 0.0)));
+		right = normalize(cross((at - pos), vec3(0, 1, 0)));
 		up = normalize(cross(right, (at - pos)));
-		elev_angle = acos(dot(normalize(at - pos), vec3(0, 1, 0)));
 	}
 
 	vec3 GetPos(void) {
@@ -122,10 +99,9 @@ public:
 	}
 
 	void SetAt(vec3 Look) {
-		at = Look;
-		right = normalize(cross((at - pos), vec3(0.0, 1.0, 0.0)));
+		at = pos + normalize(Look - pos);
+		right = normalize(cross((at - pos), vec3(0, 1, 0)));
 		up = normalize(cross(right, (at - pos)));
-		elev_angle = acos(dot(normalize(at - pos), vec3(0, 1, 0)));
 	}
 
 	vec3 GetAt(void) {

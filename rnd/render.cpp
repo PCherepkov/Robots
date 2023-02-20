@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'render.cpp'
- * LAST UPDATE: 18.02.2023
+ * LAST UPDATE: 20.02.2023
  */
 
 /* rendering functions */
@@ -25,7 +25,7 @@ void RenderInit(GLFWwindow* window) {
     view = translate(view, vec3(0.0f, -0.5f, -2.0f));
     
     mat4 projection = mat4(1.0f);
-    projection = perspective(radians(90.0f), (float)ani.w / (float)ani.h, 0.1f, 1000.0f);
+    projection = perspective(radians(90.0f), (float)ani.w / (float)ani.h, 0.01f, 1000.0f);
     
     smth->projection = projection;
     smth->view = view;
@@ -51,31 +51,13 @@ void Render(GLFWwindow* window) {
         pr->Draw();
     }
 
-    vector<vertex> v;
-    vector<uint> i;
-    topo::sphere<vertex>(v, i, 0.08, 8, 8);
-    prim at_prim(v, i);
-    at_prim.projection = perspective(radians(90.0f), (float)ani.w / (float)ani.h, 0.1f, 1000.0f);
-    at_prim.view = translate(mat4(1.0f), vec3(0.0f, -0.5f, -2.0f));
-    at_prim.model = translate(mat4(1.0f), vec3(ani.cam.GetAt()));
-    ani.Shader(&at_prim);
-    at_prim.Draw();
-    
     ani.UpdateTimer(ani.is_pause);
     FlyingWASD();
+    
     ani.dx = ani.dy = 0;
 
-  /* debug output */
+    /* debug output */
 #if 0
-  vec3
-      pos = ani.cam.GetPos(),
-      at = ani.cam.GetAt(),
-      up = ani.cam.GetUp();
-  BEGIN
-  {
-    gluLookAt(pos[0], pos[1], pos[2], at[0], at[1], at[2], 0, 1, 0);
-    glMatrixMode(GL_PROJECTION);
-    BEGIN
       int w = ani.w, h = ani.h, x = w - 90, y = h - 10;
 
       glLoadIdentity();
@@ -83,13 +65,8 @@ void Render(GLFWwindow* window) {
       sprintf_s(buf, 32, "%s%f", "fps: ", ani.fps);
       glDisable(GL_LIGHTING);
       Output(x, y, 1, 1, 1, GLUT_BITMAP_HELVETICA_12, buf);
-      sprintf_s(buf, 32, "%s%d%s%d", "x: ", ani.x, " y: ", ani.y);
+      sprintf_s(buf, 32, "%s%d%s%d", "x: ", (int)ani.x, " y: ", (int)ani.y);
       Output(x, y - 10, 1, 1, 1, GLUT_BITMAP_HELVETICA_12, buf);
-      glEnable(GL_LIGHTING);
-    END
-    glMatrixMode(GL_MODELVIEW);
-  }
-    END
 #endif
 }
 

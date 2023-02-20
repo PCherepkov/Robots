@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'topology.h'
- * LAST UPDATE: 13.02.2023
+ * LAST UPDATE: 20.02.2023
  */
 
 #pragma once
@@ -27,7 +27,7 @@ namespace topo
 				topo[i * m + j + 1].p.y = r * sin(theta) * sin(phi);
 				topo[i * m + j + 1].p.z = r * cos(theta);
 				topo[i * m + j + 1].n = normalize(topo[i * m + j + 1].p);
-				topo[i * m + j + 1].t = vec2((flt)i / n, (flt)j / m) * 2.f - vec2(1);
+				topo[i * m + j + 1].t = vec2((flt)i / n, (flt)j / m);
 			}
 		}
 		topo[n * m].p = vec3(0, 0, -r);
@@ -52,7 +52,7 @@ namespace topo
 			for (int j = 0; j < m; j++) {
 				topo[i * m + j].p = vec3((flt)j / (m - 1) * w - w / 2, 0, (flt)i / (n - 1) * h - h / 2);
 				topo[i * m + j].n = vec3(0, 1, 0);
-				topo[i * m + j].t = vec2((flt)j / (m - 1), (flt)i / (n - 1)) * 2.f - vec2(1);
+				topo[i * m + j].t = vec2((flt)j / (m - 1), (flt)i / (n - 1));
 			}
 		}
 
