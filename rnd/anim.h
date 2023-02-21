@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'anim.h'
- * LAST UPDATE: 20.02.2023
+ * LAST UPDATE: 21.02.2023
  */
 
 #pragma once
@@ -51,7 +51,7 @@ public:
 	void AddPrim(prim* pr) {
 		if (pr->shd == nullptr)
 			SetShader(pr);
-		if (pr->texture == nullptr)
+		if (pr->textures.empty())
 			SetTexture(pr);
 		prims.push_back(pr);
 	}
@@ -67,13 +67,16 @@ public:
 		pr->shd = &shaders[name];
 	}
 
-	void SetTexture(prim* pr, const string& name="") {
+	void SetTexture(prim* pr, const string& name="", const int& ind=-1) {
 		map<string, tex>::iterator it = texes.find(name);
 		if (it == texes.end() && name == "")
 			texes[name] = tex();
 		else if (it == texes.end())
 			texes[name] = tex(name);
-		pr->texture = &texes[name];
+		if (ind == -1 && pr->textures.size() < MAX_TEXTURES)
+			pr->textures.push_back(&texes[name]);
+		else if (ind > -1 && ind < pr->textures.size())
+			pr->textures[ind] = &texes[name];
 	}
 };
 

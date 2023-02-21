@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'prim.h'
- * LAST UPDATE: 20.02.2023
+ * LAST UPDATE: 21.02.2023
  */
 
 #pragma once
@@ -31,18 +31,17 @@ struct vertex
 
 class prim {
     uint vbo, vao, ebo;
-
+    uint tex_num; // number of active textures
 public:
     uint prim_type; // GL_TRIANGLES, ...
     vector<vertex> verts;  
     vector<uint> inds;
     shader* shd;
-    tex* texture;
+    vector<tex*> textures;
     mat4 projection, view, model;
 
     prim() {
         shd = nullptr;
-        texture = nullptr;
         model = mat4(1.0f);
         view = mat4(1.0f);
         projection = mat4(1.0f);
@@ -54,7 +53,6 @@ public:
         verts = vcs;
         inds = indxs;
         shd = nullptr;
-        texture = nullptr;
         glGenBuffers(1, &vbo);
         glGenBuffers(1, &ebo);
         glGenVertexArrays(1, &vao);
@@ -118,7 +116,12 @@ public:
 	    glUniformMatrix4fv(glGetUniformLocation(shd->prg, "view"), 1, GL_FALSE, value_ptr(view));
 	    glUniformMatrix4fv(glGetUniformLocation(shd->prg, "model"), 1, GL_FALSE, value_ptr(model));
         
-        glBindTexture(GL_TEXTURE_2D, texture->code);
+        for (int i = 0; i < textures.size(); i++) {
+            glUniform1i(glGetUniformLocation(shd->prg, (string("tex") + (char)('0' + i)).c_str()), i);
+            glActiveTexture(GL_TEXTURE0 + i);
+            glBindTexture(GL_TEXTURE_2D, textures[i]->code);
+        }
+
         glBindVertexArray(vao);
         glDrawElements(prim_type, verts.size(), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);

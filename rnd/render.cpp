@@ -32,6 +32,7 @@ void RenderInit(GLFWwindow* window) {
     smth->model = model;
     
     ani.SetTexture(smth, "src/wall.jpg");
+    ani.SetTexture(smth, "src/awesomeface.png");
 
     ani.AddPrim(smth);
 }

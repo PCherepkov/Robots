@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'controls.cpp'
- * LAST UPDATE: 20.02.2023
+ * LAST UPDATE: 21.02.2023
  */
 
 /* control functions */
@@ -17,8 +17,8 @@ void Head(void) {
 		at = new_at;
     }
     if (ani.dy != 0 && ani.h != 0) {
-        flt angle = radians(-(flt)ani.dy * 180 / ani.h), elev = ani.cam.GetElev(),
-            new_angle = elev - angle;
+        flt angle = radians(-(flt)ani.dy * 180 / ani.h), pitch = ani.cam.GetPitch(),
+            new_angle = pitch - angle;
         if (new_angle > PI * 0.99)
             return;
         else if (new_angle < PI * 0.01)

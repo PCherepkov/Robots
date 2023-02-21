@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'camera.h'
- * LAST UPDATE: 20.02.2023
+ * LAST UPDATE: 21.02.2023
  */
 
 #pragma once
@@ -71,7 +71,7 @@ public:
 class camera {
 private:
 	vec3 pos, at, up, right;
-	dbl elev_angle;
+	dbl pitch;
 public:
 	camera() {
 		pos = vec3(0, 0, 1);
@@ -83,9 +83,9 @@ public:
 	~camera() {
 	}
 
-	dbl GetElev(void) {
-		elev_angle = acos(dot(normalize(at - pos), vec3(0, 1, 0)));
-		return elev_angle;
+	dbl GetPitch(void) {
+		pitch = acos(dot(normalize(at - pos), vec3(0, 1, 0)));
+		return pitch;
 	}
 
 	void SetPos(vec3 Loc) {

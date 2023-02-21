@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'def.h'
- * LAST UPDATE: 16.02.2023
+ * LAST UPDATE: 21.02.2023
  */
 
 #pragma once
@@ -45,6 +45,6 @@ typedef float flt;
 
 #define PI 3.14159265358979323846
 
-#define MAX_TEXTURES 10
+#define MAX_TEXTURES 8 // 32
 
 /* END OF 'def.h' FILE */
