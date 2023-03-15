@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'shaders.h'
- * LAST UPDATE: 20.02.2023
+ * LAST UPDATE: 15.03.2023
  */
 
 #pragma once
@@ -13,9 +13,34 @@
 
 class shader {
 public:
+    enum uniform_types {
+        VEC3, MAT4, FLT,
+        MTL, LIGHT
+    };
+
     uint prg;
     shader() {}
     ~shader() {
+    }
+
+    void SetUniform(const string& name, uniform_types t, void* data) {
+        glUseProgram(prg);
+        uint loc = glGetUniformLocation(prg, name.c_str());
+        switch (t)
+        {
+        case VEC3:
+            glUniform3fv(loc, 1, value_ptr(*(vec3*)data));
+            break;
+        case MAT4:
+            glUniformMatrix4fv(loc, 1, false, value_ptr(*(mat4*)data));
+            break;
+        case FLT:
+            glUniform1f(loc, *(flt*)data);
+            break;
+        default:
+            break;
+        }
+        glUseProgram(0);
     }
     
     shader(const string& name) {

@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'gl_funcs.cpp'
- * LAST UPDATE: 20.02.2023
+ * LAST UPDATE: 15.03.2023
  */
 
 /* common glut handling functions */
@@ -85,60 +85,10 @@ void KeyboardInput(GLFWwindow* window, int key, int scancode, int action, int mo
     ani.is_fullscreen = !ani.is_fullscreen;
     if (ani.is_fullscreen)
       SetWindow(1920, 1080, ani.is_fullscreen);
+      // SetWindow(2560, 1600, ani.is_fullscreen);
     else
       SetWindow(800, 800, ani.is_fullscreen);
   }
 }
-
-
-#if 0
-void Display(void) {
-  glClearColor(0.17, 0.1603, 0.209, 1);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-  Render();
-
-  glFinish();
-  glutSwapBuffers();
-  glutPostRedisplay();
-}
-
-void Keyboard(uchar key, int x, int y) {
-  ani.Response();
-  if (key == VK_ESCAPE) {
-    exit(0);
-  }
-  if (key == 'P' || key == 'p') {
-    ani.is_pause = !ani.is_pause;
-  }
-  if (key == VK_TAB) {
-    ani.is_wire_frame = !ani.is_wire_frame;
-  }
-}
-
-
-void Idle(void) {
-  ani.UpdateTimer(ani.pause);
-  ani.Response();
-  FlyingWASD();
-}
-
-void Mouse(int button, int state, int x, int y) {
-  ani.state = state;
-  ani.button = button;
-  ani.Response(x, y);
-  Head();
-}
-
-void PassiveMotion(int x, int y) {
-  ani.Response(x, y);
-  Head();
-}
-
-void Motion(int x, int y) {
-  ani.Response(x, y);
-  Head();
-}
-#endif
 
 /* END OF 'gl_funcs.cpp' FILE */

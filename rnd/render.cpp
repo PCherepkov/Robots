@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'render.cpp'
- * LAST UPDATE: 20.02.2023
+ * LAST UPDATE: 15.03.2023
  */
 
 /* rendering functions */
@@ -8,13 +8,10 @@
 #include "render.h"
 #include "../utils/utils.h"
 
-#define BEGIN glPushMatrix(); {
-#define END   } glPopMatrix();
 
 void RenderInit(GLFWwindow* window) {
     vector<vertex> v;
     vector<uint> i;
-    // topo::sphere<vertex>(v, i, 1, 30, 30);
     topo::grid<vertex>(v, i, 10, 10, 4, 4);
     prim* smth = new prim(v, i);
     
@@ -31,14 +28,38 @@ void RenderInit(GLFWwindow* window) {
     smth->view = view;
     smth->model = model;
     
-    ani.SetTexture(smth, "src/wall.jpg");
-    ani.SetTexture(smth, "src/awesomeface.png");
+    ani.SetTexture(smth, "src/brick-wall/diff.tga");
+    ani.SetTexture(smth, "src/brick-wall/nor.tga");
 
+    // ani.AddPrim(smth);
+
+    topo::sphere<vertex>(v, i, 2, 30, 30);
+    prim* sph = new prim(v, i);
+    sph->projection = projection;
+    sph->view = view;
+    sph->model = translate(mat4(1.0f), vec3(0, 4, 0)) * rotate(model, radians(-90.f), vec3(1, 0, 0));
+    ani.SetTexture(sph, "src/earth.jpg");
+
+    mtl* src = new mtl(vec3(0), vec3(0.5, 0, 0), vec3(0.7, 0.6, 0.6), 0.25);
+    src->name = "red-plastic";
+    ani.SetMaterial(sph, src);
+    ani.AddPrim(sph);
+
+    ani.SetMaterial(smth, "red-plastic");
     ani.AddPrim(smth);
+
+    prim* light = new prim(v, i);
+    light->projection = projection;
+    light->view = view;
+    light->model = translate(mat4(1.0f), vec3(1)) * scale(mat4(1.0f), vec3(0.1));
+    ani.SetShader(light, "rnd/shd/LIGHT/");
+    ani.AddPrim(light);
 }
 
+
 void Render(GLFWwindow* window) {
-    glClearColor(0.17, 0.1603, 0.209, 1);
+    // glClearColor(0.17, 0.1603, 0.209, 1);
+    glClearColor(0, 0, 0, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     if (ani.is_wire_frame)
@@ -48,28 +69,16 @@ void Render(GLFWwindow* window) {
     
     vector<prim*> prs;
     ani.GetPrims(&prs);
+    vec3 pos = ani.cam.GetPos();
     for (auto pr : prs) {
         pr->view = ani.cam.GetView();
         pr->Draw();
+        pr->shd->SetUniform("cam_pos", shader::uniform_types::VEC3, &pos);
     }
 
     ani.UpdateTimer(ani.is_pause);
     FlyingWASD();
-    
     ani.dx = ani.dy = 0;
-
-    /* debug output */
-#if 0
-      int w = ani.w, h = ani.h, x = w - 90, y = h - 10;
-
-      glLoadIdentity();
-      char buf[32];
-      sprintf_s(buf, 32, "%s%f", "fps: ", ani.fps);
-      glDisable(GL_LIGHTING);
-      Output(x, y, 1, 1, 1, GLUT_BITMAP_HELVETICA_12, buf);
-      sprintf_s(buf, 32, "%s%d%s%d", "x: ", (int)ani.x, " y: ", (int)ani.y);
-      Output(x, y - 10, 1, 1, 1, GLUT_BITMAP_HELVETICA_12, buf);
-#endif
 }
 
 /* END OF 'render.cpp' FILE */

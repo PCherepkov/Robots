@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'topology.h'
- * LAST UPDATE: 20.02.2023
+ * LAST UPDATE: 21.02.2023
  */
 
 #pragma once
@@ -18,21 +18,22 @@ namespace topo
 		dbl phi, theta;
 		topo[0].p = vec3(0, 0, r);
 		topo[0].n = vec3(0, 0, 1);
-		topo[0].t = vec2(-1, -1);
+		topo[0].t = vec2(0, 0);
 		for (i = 0; i < n; i++) {
-			theta = i * PI * 2 / n;
+			theta = i * PI * 2 / (n - 1 + 1);
 			for (j = 0; j < m; j++) {
-				phi = j * 2 * PI / m;
-				topo[i * m + j + 1].p.x = r * sin(theta) * cos(phi);
-				topo[i * m + j + 1].p.y = r * sin(theta) * sin(phi);
-				topo[i * m + j + 1].p.z = r * cos(theta);
-				topo[i * m + j + 1].n = normalize(topo[i * m + j + 1].p);
-				topo[i * m + j + 1].t = vec2((flt)i / n, (flt)j / m);
+				phi = j * 2 * PI / (m - 1);
+				vec3 pos(r * sin(theta) * cos(phi),
+					r * sin(theta) * sin(phi),
+					r * cos(theta));
+				topo[i * m + j + 1].p = pos;
+				topo[i * m + j + 1].n = normalize(pos);
+				topo[i * m + j + 1].t = vec2((flt)phi / PI / 2, (flt)theta / PI);
 			}
 		}
-		topo[n * m].p = vec3(0, 0, -r);
-		topo[n * m].n = vec3(0, 0, -1);
-		topo[n * m].t = vec2(1, 1);
+		topo[n * m + 1].p = vec3(0, 0, -r);
+		topo[n * m + 1].n = vec3(0, 0, -1);
+		topo[n * m + 1].t = vec2(1, 0);
 		
 		for (int i = 0; i < n - 1; i++) {
 			for (int j = 0; j < m; j++) {

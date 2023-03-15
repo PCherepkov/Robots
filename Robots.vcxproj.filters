@@ -16,23 +16,11 @@
     <Filter Include="Source Files\render">
       <UniqueIdentifier>{77276be7-1478-4475-9cb9-a10b43151aa3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ai">
-      <UniqueIdentifier>{65e0c1a6-ad41-4b53-8548-142b7485262f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\levels">
-      <UniqueIdentifier>{b9ee4d28-374b-4cae-8a38-12415066fb0e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\utils">
       <UniqueIdentifier>{edff942c-14f0-4d8f-91b7-fddafa10e270}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\ui">
       <UniqueIdentifier>{c3108070-e764-4a6a-8e58-1f09538cfccc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\render\shaders">
-      <UniqueIdentifier>{870806fb-11ee-4469-8e88-61ab93329b95}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\render\shaders\default">
-      <UniqueIdentifier>{ff86c5fc-034f-4517-b9a5-8bb0b988dfc8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\camera">
       <UniqueIdentifier>{e4acb4de-2105-47d4-bfb9-09b839da4fad}</UniqueIdentifier>
@@ -40,8 +28,26 @@
     <Filter Include="Source Files\render\topology">
       <UniqueIdentifier>{eb61c5f9-d6de-4784-ad88-7d513741ce9b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\render\textures">
+    <Filter Include="Source Files\render\gl interface">
+      <UniqueIdentifier>{05423df2-b385-4d40-979d-49f8caa6c85e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\render\prim">
+      <UniqueIdentifier>{8f2e5288-9378-426c-8fe1-e9291441ceca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\render\prim\textures">
       <UniqueIdentifier>{52a86c97-fc85-4e33-afb3-71f7364004ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\render\prim\shaders">
+      <UniqueIdentifier>{870806fb-11ee-4469-8e88-61ab93329b95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\render\prim\shaders\default">
+      <UniqueIdentifier>{ff86c5fc-034f-4517-b9a5-8bb0b988dfc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\render\prim\materials">
+      <UniqueIdentifier>{9096635f-5d00-467c-abfe-7e5fe17d005b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\render\prim\shaders\light">
+      <UniqueIdentifier>{3e65f7a8-344c-4f18-a0cc-76ad9e76a99e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -54,9 +60,6 @@
     <ClCompile Include="utils\utils.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
-    <ClCompile Include="rnd\gl_funcs.cpp">
-      <Filter>Source Files\render</Filter>
-    </ClCompile>
     <ClCompile Include="ui\controls.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
@@ -64,7 +67,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="rnd\textures\texture.cpp">
-      <Filter>Source Files\render\textures</Filter>
+      <Filter>Source Files\render\prim\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="rnd\gl_funcs.cpp">
+      <Filter>Source Files\render\gl interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -89,31 +95,40 @@
     <ClInclude Include="utils\utils.h">
       <Filter>Source Files\utils</Filter>
     </ClInclude>
-    <ClInclude Include="rnd\gl_funcs.h">
-      <Filter>Source Files\render</Filter>
-    </ClInclude>
     <ClInclude Include="ui\controls.h">
       <Filter>Source Files\ui</Filter>
     </ClInclude>
     <ClInclude Include="rnd\shd\shaders.h">
-      <Filter>Source Files\render\shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="rnd\prim.h">
-      <Filter>Source Files\render</Filter>
+      <Filter>Source Files\render\prim\shaders</Filter>
     </ClInclude>
     <ClInclude Include="rnd\topology\topology.h">
       <Filter>Source Files\render\topology</Filter>
     </ClInclude>
     <ClInclude Include="rnd\textures\textures.h">
-      <Filter>Source Files\render\textures</Filter>
+      <Filter>Source Files\render\prim\textures</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd\gl_funcs.h">
+      <Filter>Source Files\render\gl interface</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd\materials\materials.h">
+      <Filter>Source Files\render\prim\materials</Filter>
+    </ClInclude>
+    <ClInclude Include="rnd\prim.h">
+      <Filter>Source Files\render\prim</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="rnd\shd\DEFAULT\frag.glsl">
-      <Filter>Source Files\render\shaders\default</Filter>
+      <Filter>Source Files\render\prim\shaders\default</Filter>
     </None>
     <None Include="rnd\shd\DEFAULT\vert.glsl">
-      <Filter>Source Files\render\shaders\default</Filter>
+      <Filter>Source Files\render\prim\shaders\default</Filter>
+    </None>
+    <None Include="rnd\shd\LIGHT\frag.glsl">
+      <Filter>Source Files\render\prim\shaders\light</Filter>
+    </None>
+    <None Include="rnd\shd\LIGHT\vert.glsl">
+      <Filter>Source Files\render\prim\shaders\light</Filter>
     </None>
   </ItemGroup>
 </Project>

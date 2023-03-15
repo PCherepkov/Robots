@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'prim.h'
- * LAST UPDATE: 21.02.2023
+ * LAST UPDATE: 15.03.2023
  */
 
 #pragma once
@@ -11,6 +11,7 @@
 #include "shd/shaders.h"
 #include "render.h"
 #include "textures/textures.h"
+#include "materials/materials.h"
 
 class anim;
 
@@ -32,27 +33,31 @@ struct vertex
 class prim {
     uint vbo, vao, ebo;
     uint tex_num; // number of active textures
+
 public:
     uint prim_type; // GL_TRIANGLES, ...
     vector<vertex> verts;  
     vector<uint> inds;
+    mtl* material;
     shader* shd;
     vector<tex*> textures;
     mat4 projection, view, model;
 
     prim() {
         shd = nullptr;
+        material = nullptr;
         model = mat4(1.0f);
         view = mat4(1.0f);
         projection = mat4(1.0f);
         prim_type = GL_POINTS;
     }
 
-    prim(vector<vertex> vcs, vector<uint> indxs) {
+    prim(vector<vertex>& vcs, vector<uint>& indxs) {
         prim_type = GL_TRIANGLE_STRIP;
         verts = vcs;
         inds = indxs;
         shd = nullptr;
+        material = nullptr;
         glGenBuffers(1, &vbo);
         glGenBuffers(1, &ebo);
         glGenVertexArrays(1, &vao);
@@ -110,12 +115,19 @@ public:
 
     void Draw(void) {
         glUseProgram(shd->prg);
-        
+
+        glUniform3fv(glGetUniformLocation(shd->prg, "mtl.ka"), 1, &material->ka[0]);
+        glUniform3fv(glGetUniformLocation(shd->prg, "mtl.kd"), 1, &material->kd[0]);
+        glUniform3fv(glGetUniformLocation(shd->prg, "mtl.ks"), 1, &material->ks[0]);
+        glUniform1f(glGetUniformLocation(shd->prg, "mtl.ph"), material->ph);
+
         glUniform1f(glGetUniformLocation(shd->prg, "time"), (flt)glfwGetTime());
 	    glUniformMatrix4fv(glGetUniformLocation(shd->prg, "projection"), 1, GL_FALSE, value_ptr(projection));
 	    glUniformMatrix4fv(glGetUniformLocation(shd->prg, "view"), 1, GL_FALSE, value_ptr(view));
 	    glUniformMatrix4fv(glGetUniformLocation(shd->prg, "model"), 1, GL_FALSE, value_ptr(model));
+	    glUniformMatrix4fv(glGetUniformLocation(shd->prg, "tim"), 1, GL_FALSE, value_ptr(transpose(inverse(model))));
         
+        glUniform1i(glGetUniformLocation(shd->prg, "tex_num"), textures.size());
         for (int i = 0; i < textures.size(); i++) {
             glUniform1i(glGetUniformLocation(shd->prg, (string("tex") + (char)('0' + i)).c_str()), i);
             glActiveTexture(GL_TEXTURE0 + i);
@@ -125,6 +137,7 @@ public:
         glBindVertexArray(vao);
         glDrawElements(prim_type, verts.size(), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
+        glUseProgram(0);
     }
 };
 

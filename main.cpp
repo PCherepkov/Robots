@@ -19,7 +19,7 @@ int main(int argc, char* argv[]) {
     
     SetWindow(1920, 1080, false);
     
-    ani.cam.SetPos(vec3(0, 0.5, 2));
+    ani.cam.SetPos(vec3(6, 2, 1));
     ani.cam.SetAt(vec3(0));
     
     ani.exit = false;

@@ -162,6 +162,7 @@
     <ClInclude Include="mth\camera.h" />
     <ClInclude Include="rnd\anim.h" />
     <ClInclude Include="rnd\gl_funcs.h" />
+    <ClInclude Include="rnd\materials\materials.h" />
     <ClInclude Include="rnd\prim.h" />
     <ClInclude Include="rnd\render.h" />
     <ClInclude Include="rnd\shd\shaders.h" />
@@ -174,6 +175,8 @@
   <ItemGroup>
     <None Include="rnd\shd\DEFAULT\frag.glsl" />
     <None Include="rnd\shd\DEFAULT\vert.glsl" />
+    <None Include="rnd\shd\LIGHT\frag.glsl" />
+    <None Include="rnd\shd\LIGHT\vert.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

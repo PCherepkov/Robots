@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'anim.h'
- * LAST UPDATE: 21.02.2023
+ * LAST UPDATE: 15.03.2023
  */
 
 #pragma once
@@ -16,10 +16,11 @@ class anim;
 
 extern anim ani;
 
-class anim : public camera, public timer, public keyboard, public mouse {
+class anim : public timer, public keyboard, public mouse {
 	vector<prim*> prims;
 	map<string, shader> shaders;
 	map<string, tex> texes;
+	map<string, mtl*> mtls;
 public:
 	GLFWwindow* window;
 	int w, h;
@@ -34,6 +35,7 @@ public:
 
 	~anim() {
 		for (auto pr : prims) delete pr;
+		for (auto& m : mtls) delete m.second;
 	}
 
 	void Response(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -53,6 +55,8 @@ public:
 			SetShader(pr);
 		if (pr->textures.empty())
 			SetTexture(pr);
+		if (pr->material == nullptr)
+			SetMaterial(pr, "default");
 		prims.push_back(pr);
 	}
 
@@ -77,6 +81,24 @@ public:
 			pr->textures.push_back(&texes[name]);
 		else if (ind > -1 && ind < pr->textures.size())
 			pr->textures[ind] = &texes[name];
+	}
+
+	void SetMaterial(prim* pr, const string& name) {
+		map<string, mtl*>::iterator it = mtls.find(name);
+		if (it == mtls.end() && name == "")
+			mtls[name] = new mtl();
+		else if (it == mtls.end())
+			mtls[name] = new mtl(name);
+		pr->material = mtls[name];
+	}
+
+	void SetMaterial(prim* pr, mtl* src) {
+		if (src->name == "")
+			src->name = string("~") + to_string(mtls.size());
+		map<string, mtl*>::iterator it = mtls.find(src->name);
+		if (it == mtls.end())
+			mtls[src->name] = src;
+		pr->material = src;
 	}
 };
 
