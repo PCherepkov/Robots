@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'render.h'
- * LAST UPDATE: 10.10.2021
+ * LAST UPDATE: 16.03.2021
  */
 
 #pragma once
@@ -10,10 +10,9 @@
 #include "topology/topology.h"
 #include "anim.h"
 #include "gl_funcs.h"
-#include "prim.h"
-#include "shd/shaders.h"
+#include "prim/prim.h"
 
 void RenderInit(GLFWwindow* window);
 void Render(GLFWwindow* window);
 
- /* END OF 'render.h' FILE */
+/* END OF 'render.h' FILE */

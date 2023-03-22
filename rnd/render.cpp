@@ -1,12 +1,13 @@
 /* Property of Cherepkov Petr
  * FILE: 'render.cpp'
- * LAST UPDATE: 15.03.2023
+ * LAST UPDATE: 22.03.2023
  */
 
 /* rendering functions */
 
 #include "render.h"
 #include "../utils/utils.h"
+#include "./lighting/lighting.h"
 
 
 void RenderInit(GLFWwindow* window) {
@@ -23,37 +24,37 @@ void RenderInit(GLFWwindow* window) {
     
     mat4 projection = mat4(1.0f);
     projection = perspective(radians(90.0f), (float)ani.w / (float)ani.h, 0.01f, 1000.0f);
+
+    object* obj = new object();
+    obj->projection = projection;
+    ani.AddObj(obj);
     
-    smth->projection = projection;
-    smth->view = view;
     smth->model = model;
     
     ani.SetTexture(smth, "src/brick-wall/diff.tga");
     ani.SetTexture(smth, "src/brick-wall/nor.tga");
 
-    // ani.AddPrim(smth);
-
     topo::sphere<vertex>(v, i, 2, 30, 30);
     prim* sph = new prim(v, i);
-    sph->projection = projection;
-    sph->view = view;
     sph->model = translate(mat4(1.0f), vec3(0, 4, 0)) * rotate(model, radians(-90.f), vec3(1, 0, 0));
     ani.SetTexture(sph, "src/earth.jpg");
 
     mtl* src = new mtl(vec3(0), vec3(0.5, 0, 0), vec3(0.7, 0.6, 0.6), 0.25);
     src->name = "red-plastic";
     ani.SetMaterial(sph, src);
-    ani.AddPrim(sph);
+    ani.AddPrim(obj, sph);
 
-    ani.SetMaterial(smth, "red-plastic");
-    ani.AddPrim(smth);
+    ani.SetMaterial(smth, "default");
+    ani.AddPrim(obj, smth);
 
-    prim* light = new prim(v, i);
-    light->projection = projection;
-    light->view = view;
-    light->model = translate(mat4(1.0f), vec3(1)) * scale(mat4(1.0f), vec3(0.1));
-    ani.SetShader(light, "rnd/shd/LIGHT/");
-    ani.AddPrim(light);
+    lights::point* L = new lights::point();
+    L->pos = vec3(1);
+    L->ka = vec3(1, 0.8, 0.5);
+    L->kd = vec3(1, 0.8, 0.5);
+    L->ks = vec3(1, 0.8, 0.5);
+    L->shds.push_back(ani.GetShd("rnd/prim/shd/DEFAULT/"));
+    ani.AddLight(L);
+    L->Apply();
 }
 
 
@@ -67,13 +68,13 @@ void Render(GLFWwindow* window) {
     else
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     
-    vector<prim*> prs;
-    ani.GetPrims(&prs);
+    vector<object*> objs;
+    ani.GetObjs(&objs);
     vec3 pos = ani.cam.GetPos();
-    for (auto pr : prs) {
-        pr->view = ani.cam.GetView();
-        pr->Draw();
-        pr->shd->SetUniform("cam_pos", shader::uniform_types::VEC3, &pos);
+    for (auto obj : objs) {
+        obj->view = ani.cam.GetView();
+        obj->Draw();
+        obj->shd->SetUniform("cam_pos", shader::VEC3, &pos);
     }
 
     ani.UpdateTimer(ani.is_pause);

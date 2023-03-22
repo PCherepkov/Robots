@@ -151,8 +151,8 @@
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="rnd\gl_funcs.cpp" />
+    <ClCompile Include="rnd\prim\textures\texture.cpp" />
     <ClCompile Include="rnd\render.cpp" />
-    <ClCompile Include="rnd\textures\texture.cpp" />
     <ClCompile Include="ui\controls.cpp" />
     <ClCompile Include="utils\utils.cpp" />
   </ItemGroup>
@@ -162,21 +162,23 @@
     <ClInclude Include="mth\camera.h" />
     <ClInclude Include="rnd\anim.h" />
     <ClInclude Include="rnd\gl_funcs.h" />
-    <ClInclude Include="rnd\materials\materials.h" />
-    <ClInclude Include="rnd\prim.h" />
+    <ClInclude Include="rnd\lighting\lighting.h" />
+    <ClInclude Include="rnd\object.h" />
+    <ClInclude Include="rnd\prim\materials\materials.h" />
+    <ClInclude Include="rnd\prim\prim.h" />
+    <ClInclude Include="rnd\prim\shd\shaders.h" />
+    <ClInclude Include="rnd\prim\textures\textures.h" />
     <ClInclude Include="rnd\render.h" />
-    <ClInclude Include="rnd\shd\shaders.h" />
-    <ClInclude Include="rnd\textures\textures.h" />
     <ClInclude Include="rnd\topology\topology.h" />
     <ClInclude Include="ui\controls.h" />
     <ClInclude Include="utils\timer.h" />
     <ClInclude Include="utils\utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="rnd\shd\DEFAULT\frag.glsl" />
-    <None Include="rnd\shd\DEFAULT\vert.glsl" />
-    <None Include="rnd\shd\LIGHT\frag.glsl" />
-    <None Include="rnd\shd\LIGHT\vert.glsl" />
+    <None Include="rnd\prim\shd\DEFAULT\frag.glsl" />
+    <None Include="rnd\prim\shd\DEFAULT\vert.glsl" />
+    <None Include="rnd\prim\shd\LIGHT\frag.glsl" />
+    <None Include="rnd\prim\shd\LIGHT\vert.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

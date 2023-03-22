@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'shaders.h'
- * LAST UPDATE: 15.03.2023
+ * LAST UPDATE: 22.03.2023
  */
 
 #pragma once
@@ -15,12 +15,17 @@ class shader {
 public:
     enum uniform_types {
         VEC3, MAT4, FLT,
-        MTL, LIGHT
+        MTL
     };
 
+    string path;
     uint prg;
     shader() {}
     ~shader() {
+    }
+
+    bool operator==(shader& other) {
+        return this->prg == other.prg;
     }
 
     void SetUniform(const string& name, uniform_types t, void* data) {
@@ -42,8 +47,17 @@ public:
         }
         glUseProgram(0);
     }
+
+    void ApplyVP(const mat4& view, const mat4& proj) {
+        glUseProgram(prg);
+        glUniformMatrix4fv(glGetUniformLocation(prg, "projection"), 1, GL_FALSE, value_ptr(proj));
+        glUniformMatrix4fv(glGetUniformLocation(prg, "view"), 1, GL_FALSE, value_ptr(view));
+        glUseProgram(0);
+    }
     
     shader(const string& name) {
+        path = name;
+
         /* loading data for shaders */
         ifstream
             f(name + "frag.glsl", ios::in),

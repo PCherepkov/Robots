@@ -13,8 +13,8 @@ public:
 	flt ph;
 	string name;
 
-	mtl() : ka(0.1), kd(0.1), ks(0.1), ph(1), name("DEFAULT") {}
-	mtl(const string &s) : ka(0.1), kd(0.1), ks(0.1), ph(0.1), name(s) {}
+	mtl() : ka(0.1), kd(0.1), ks(0), ph(1), name("DEFAULT") {}
+	mtl(const string &s) : ka(0.1), kd(0.1), ks(0), ph(0.1), name(s) {}
 	mtl(vec3 a, vec3 d, vec3 s, flt p) : ka(a), kd(d), ks(s), ph(p), name("") {}
 };
 

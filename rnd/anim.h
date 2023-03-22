@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'anim.h'
- * LAST UPDATE: 15.03.2023
+ * LAST UPDATE: 22.03.2023
  */
 
 #pragma once
@@ -8,7 +8,8 @@
 /* animation class file */
 
 #include "../utils/timer.h"
-#include "prim.h"
+#include "object.h"
+#include "lighting/lighting.h"
 #include "../mth/camera.h"
 #include "../ui/controls.h"
 
@@ -17,7 +18,8 @@ class anim;
 extern anim ani;
 
 class anim : public timer, public keyboard, public mouse {
-	vector<prim*> prims;
+	vector<object*> objs;
+	vector<lights::light*> lights;
 	map<string, shader> shaders;
 	map<string, tex> texes;
 	map<string, mtl*> mtls;
@@ -34,8 +36,9 @@ public:
 	}
 
 	~anim() {
-		for (auto pr : prims) delete pr;
+		for (auto obj : objs) delete obj;
 		for (auto& m : mtls) delete m.second;
+		for (auto& L : lights) delete L;
 	}
 
 	void Response(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -46,29 +49,63 @@ public:
 		mouse::Response(newx, newy);
 	}
 
-	void GetPrims(vector<prim*>* prs) {
-		*prs = prims;
+	shader* GetShd(const string& path) {
+		return &shaders[path];
 	}
 
-	void AddPrim(prim* pr) {
-		if (pr->shd == nullptr)
+	void GetObjs(vector<object*>* ptr) {
+		*ptr = objs;
+	}
+
+	void AddLight(lights::light* L) {
+		lights.push_back(L);
+	}
+
+	void AddObj(object* obj) {
+		if (obj->shd == nullptr)
+			SetShader(obj);
+		for (auto pr : obj->prs) AddPrim(obj, pr);
+		objs.push_back(obj);
+	}
+
+	void AddPrim(object* obj, prim* pr) {
+		if (obj->shd == nullptr)
 			SetShader(pr);
+		else
+			SetShader(pr, *obj->shd);
 		if (pr->textures.empty())
 			SetTexture(pr);
 		if (pr->material == nullptr)
 			SetMaterial(pr, "default");
-		prims.push_back(pr);
+		obj->prs.push_back(pr);
 	}
 
 	static anim& GetRef(void) {
 		return ani;
 	}
 
-	void SetShader(prim* pr, const string& name="rnd/shd/DEFAULT/") {
+	void SetShader(prim* pr, const string& name="rnd/prim/shd/DEFAULT/") {
 		map<string, shader>::iterator it = shaders.find(name);
 		if (it == shaders.end())
 			shaders[name] = shader(name);
 		pr->shd = &shaders[name];
+	}
+
+	void SetShader(object* obj, const string& name = "rnd/prim/shd/DEFAULT/") {
+		map<string, shader>::iterator it = shaders.find(name);
+		if (it == shaders.end())
+			shaders[name] = shader(name);
+		obj->shd = &shaders[name];
+	}
+
+	void SetShader(prim* pr, shader& shd) {
+		auto it = shaders.begin();
+		for (; it != shaders.end(); it++)
+			if (it->second == shd)
+				break;
+		if (it == shaders.end())
+			shaders[shd.path] = shd;
+		pr->shd = &shaders[shd.path];
 	}
 
 	void SetTexture(prim* pr, const string& name="", const int& ind=-1) {
@@ -102,4 +139,4 @@ public:
 	}
 };
 
- /* END OF 'anim.h' FILE */
+/* END OF 'anim.h' FILE */

@@ -1,15 +1,14 @@
 /* Property of Cherepkov Petr
  * FILE: 'prim.h'
- * LAST UPDATE: 15.03.2023
+ * LAST UPDATE: 16.03.2023
  */
 
 #pragma once
 
  /* common header file for topologies */
 
-#include "../def.h"
+#include "../../def.h"
 #include "shd/shaders.h"
-#include "render.h"
 #include "textures/textures.h"
 #include "materials/materials.h"
 
@@ -122,8 +121,6 @@ public:
         glUniform1f(glGetUniformLocation(shd->prg, "mtl.ph"), material->ph);
 
         glUniform1f(glGetUniformLocation(shd->prg, "time"), (flt)glfwGetTime());
-	    glUniformMatrix4fv(glGetUniformLocation(shd->prg, "projection"), 1, GL_FALSE, value_ptr(projection));
-	    glUniformMatrix4fv(glGetUniformLocation(shd->prg, "view"), 1, GL_FALSE, value_ptr(view));
 	    glUniformMatrix4fv(glGetUniformLocation(shd->prg, "model"), 1, GL_FALSE, value_ptr(model));
 	    glUniformMatrix4fv(glGetUniformLocation(shd->prg, "tim"), 1, GL_FALSE, value_ptr(transpose(inverse(model))));
         
