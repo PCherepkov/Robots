@@ -9,11 +9,17 @@ in vec2 tex_coord;
 uniform vec3 cam_pos;
 
 uniform float time;
+
+uniform int light_num;
 uniform int tex_num;
 
 uniform sampler2D tex0;
 uniform sampler2D tex1;
 
+
+struct light {
+	vec3 ka, kd, ks;
+};
 
 struct dir_light {
 	vec3 dir;
@@ -33,7 +39,8 @@ struct material {
 };
 
 uniform material mtl;
-uniform point_light light;
+uniform point_light point_lights[12];
+uniform dir_light direct_lights[12];
 
 vec3 compute_dir(dir_light L) {
 	// ambient
@@ -55,9 +62,8 @@ vec3 compute_dir(dir_light L) {
 }
 
 vec3 compute_point(point_light L) {
-	float dist  = length(light.pos - FragPos);
-	float atten = 1.0 / (light.con + light.lin * dist + 
-    		      light.qad * (dist * dist));
+	float dist  = length(L.pos - FragPos);
+	float atten = 1.0 / (L.con + L.lin * dist + L.qad * (dist * dist));
 
 	// ambient
 	vec3 ambient = L.ka * mtl.ka;
@@ -79,6 +85,10 @@ vec3 compute_point(point_light L) {
 }
 
 void main() {
-	vec3 result = compute_point(light);
+	vec3 result = compute_point(point_lights[0]) +
+				  compute_point(point_lights[1]) + 
+				  compute_dir(direct_lights[0]);
+	result = clamp(result, vec3(0), vec3(1));
 	FragColor = vec4(result, 1.0);
+	// FragColor = vec4(tex_coord, 0.0, 1.0);
 }

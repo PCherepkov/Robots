@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'anim.h'
- * LAST UPDATE: 22.03.2023
+ * LAST UPDATE: 25.03.2023
  */
 
 #pragma once
@@ -58,6 +58,11 @@ public:
 	}
 
 	void AddLight(lights::light* L) {
+		int i = 0, sum = 0;
+		for (; i < lights.size(); i++)
+			if (lights[i]->type == L->type)
+				sum += 1;
+		L->ind = sum;
 		lights.push_back(L);
 	}
 

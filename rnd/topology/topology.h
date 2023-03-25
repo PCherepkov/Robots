@@ -56,7 +56,21 @@ namespace topo
 				topo[i * m + j].t = vec2((flt)j / (m - 1), (flt)i / (n - 1));
 			}
 		}
-
+#if 0
+		for (int i = 0; i < n; i++)
+			for (int j = 0; j < m; j++)
+				ind.push_back(i * m + j);
+#endif
+#if 0
+		for (int i = 0; i < n - 1; i++) {
+			for (int j = 0; j < m; j++) {
+				ind.push_back(i * m + j);
+				ind.push_back((i + 1) * m + j);
+			}
+			ind.push_back(-1);
+		}
+#endif
+#if 1
 		for (int i = 0; i < n - 1; i++) {
 			for (int j = 0; j < m; j++) {
 				ind.push_back(i * m + j);
@@ -65,6 +79,7 @@ namespace topo
 			ind.push_back((i + 1) * m + m - 1);
 			ind.push_back((i + 1) * m);
 		}
+#endif
 		return;
 	}
 }

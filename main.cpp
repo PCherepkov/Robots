@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'main.cpp'
- * LAST UPDATE: 20.02.2023
+ * LAST UPDATE: 25.03.2023
  */
 
 
@@ -26,6 +26,8 @@ int main(int argc, char* argv[]) {
     
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_TEXTURE_2D);
+    glEnable(GL_PRIMITIVE_RESTART);
+    glPrimitiveRestartIndex(-1);
     glPointSize(5);
     while (!ani.exit) {
         Render(ani.window);

@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'render.cpp'
- * LAST UPDATE: 22.03.2023
+ * LAST UPDATE: 25.03.2023
  */
 
 /* rendering functions */
@@ -47,14 +47,29 @@ void RenderInit(GLFWwindow* window) {
     ani.SetMaterial(smth, "default");
     ani.AddPrim(obj, smth);
 
-    lights::point* L = new lights::point();
-    L->pos = vec3(1);
-    L->ka = vec3(1, 0.8, 0.5);
-    L->kd = vec3(1, 0.8, 0.5);
-    L->ks = vec3(1, 0.8, 0.5);
-    L->shds.push_back(ani.GetShd("rnd/prim/shd/DEFAULT/"));
-    ani.AddLight(L);
-    L->Apply();
+    lights::point* P = new lights::point();
+    P->pos = vec3(1);
+    P->ka = vec3(1, 0.8, 0.5);
+    P->kd = vec3(1, 0.8, 0.5);
+    P->ks = vec3(1, 0.8, 0.5);
+    P->shds.push_back(ani.GetShd("rnd/prim/shd/DEFAULT/"));
+    ani.AddLight(P);
+    P->Apply();
+
+    lights::point* P2 = new lights::point();
+    P2->pos = vec3(-2, 2, -2);
+    P2->shds.push_back(ani.GetShd("rnd/prim/shd/DEFAULT/"));
+    ani.AddLight(P2);
+    P2->Apply();
+
+    lights::direct* D = new lights::direct();
+    D->dir = normalize(-vec3(6, 2, -1));
+    D->ka = vec3(0.12, 0.12, 0.3);
+    D->kd = vec3(0);
+    D->ks = vec3(0);
+    D->shds.push_back(ani.GetShd("rnd/prim/shd/DEFAULT/"));
+    ani.AddLight(D);
+    D->Apply();
 }
 
 
