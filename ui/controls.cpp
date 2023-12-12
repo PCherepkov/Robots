@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'controls.cpp'
- * LAST UPDATE: 21.02.2023
+ * LAST UPDATE: 12.12.2023
  */
 
 /* control functions */
@@ -12,7 +12,7 @@
 void Head(void) {
     vec3 at = ani.cam.GetAt(), pos = ani.cam.GetPos();
     if (ani.dx != 0 && ani.w != 0) {
-        vec3 new_at = translate(mat4(1.0f), pos) * rotate(mat4(1.0f), radians(-(flt)ani.dx * 180 / ani.w), ani.cam.GetUp()) * vec4(at - pos, 1.0);
+        vec3 new_at = translate(mat4(1.0f), pos) * rotate(mat4(1.0f), radians(-(flt)ani.dx * 180 / ani.w), vec3(0, 1, 0)) * vec4(at - pos, 1.0);
         ani.cam.SetAt(new_at);
 		at = new_at;
     }

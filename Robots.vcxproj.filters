@@ -52,6 +52,9 @@
     <Filter Include="Source Files\render\lighting">
       <UniqueIdentifier>{1cd85475-4ca4-4a27-8ede-fa0c15b1d6d6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\render\object">
+      <UniqueIdentifier>{a7955c9e-765c-4725-93dc-384eef6138fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -74,6 +77,15 @@
     </ClCompile>
     <ClCompile Include="rnd\prim\textures\texture.cpp">
       <Filter>Source Files\render\prim\textures</Filter>
+    </ClCompile>
+    <ClCompile Include="rnd\object.cpp">
+      <Filter>Source Files\render\object</Filter>
+    </ClCompile>
+    <ClCompile Include="rnd\prim\materials\materials.cpp">
+      <Filter>Source Files\render\prim\materials</Filter>
+    </ClCompile>
+    <ClCompile Include="rnd\anim.cpp">
+      <Filter>Source Files\render</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="rnd\lighting\lighting.h">
       <Filter>Source Files\render\lighting</Filter>
+    </ClInclude>
+    <ClInclude Include="rnddef.h">
+      <Filter>Source Files\render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

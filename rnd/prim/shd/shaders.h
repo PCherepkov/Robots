@@ -1,13 +1,13 @@
 /* Property of Cherepkov Petr
  * FILE: 'shaders.h'
- * LAST UPDATE: 22.03.2023
+ * LAST UPDATE: 09.12.2023
  */
 
 #pragma once
 
 #include <fstream>
 
-#include "../../def.h"
+#include "../../../def.h"
 
 /* common header file for shaders */
 

@@ -1,9 +1,13 @@
 /* Property of Cherepkov Petr
  * FILE: 'object.h'
- * LAST UPDATE: 21.03.2021
+ * LAST UPDATE: 08.12.2021
  */
 
 #pragma once
+
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
 
 #include "./prim/prim.h"
 
@@ -13,17 +17,12 @@ public:
 	vector<prim*> prs;
 	shader* shd;
 
-	void Draw(void) {
-		shd->ApplyVP(view, projection);
-		for (auto pr : prs) {
-			pr->Draw();
-		}
-	}
+	bool Load(string &path);
+
+	void Draw(void);
 
 	object() { shd = nullptr; }
-	~object() {
-		for (auto pr : prs) delete pr;
-	}
+	~object() { for (auto pr : prs) delete pr; }
 };
 
 /* END OF 'object.h' FILE */

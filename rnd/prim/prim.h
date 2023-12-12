@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'prim.h'
- * LAST UPDATE: 16.03.2023
+ * LAST UPDATE: 12.12.2023
  */
 
 #pragma once
@@ -11,8 +11,6 @@
 #include "shd/shaders.h"
 #include "textures/textures.h"
 #include "materials/materials.h"
-
-class anim;
 
 /* additional structure for vertex of primitive */
 
@@ -27,7 +25,7 @@ struct vertex
 	vertex(const vec3& p, const vec2& t, const vec3& n, const vec4& c) :p(p), t(t), n(n), c(c) {}
 };
 
-/* topology class itself */
+/* primitive class itself */
 
 class prim {
     uint vbo, vao, ebo;
@@ -85,7 +83,6 @@ public:
         
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferData(GL_ARRAY_BUFFER, vcs.size() * stride * sizeof(flt), vertices, GL_STATIC_DRAW);
-        delete vertices;
         
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, inds.size() * sizeof(uint), inds.data(), GL_STATIC_DRAW);
@@ -104,6 +101,7 @@ public:
         glEnableVertexAttribArray(3);
         
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+        delete vertices;
     }
 
     ~prim() {
@@ -132,7 +130,7 @@ public:
         }
 
         glBindVertexArray(vao);
-        glDrawElements(prim_type, verts.size(), GL_UNSIGNED_INT, 0);
+        glDrawElements(prim_type, inds.size(), GL_UNSIGNED_INT, 0);
         glBindVertexArray(0);
         glUseProgram(0);
     }

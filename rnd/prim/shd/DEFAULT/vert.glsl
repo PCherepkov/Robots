@@ -41,6 +41,7 @@ void main() {
   float t = 0;
   mat4 m = rotateX(sin(t * 8) / 8.0) * rotateY(t) * model;
   gl_Position = projection * view * m * vec4(pos, 1.0);
+  // gl_Position = projection * view * m * vec4(pos + vec3(0, 0.5 * sin(time + 20 * exp((tex.x - 0.5) * (tex.x - 0.5) + (tex.y - 0.5) * (tex.y - 0.5))), 0), 1.0);
   vertex_color = vec4(tex, 0.0, 1.0);
   tex_coord = tex;
   vertex_norm = mat3(tim) * norm;

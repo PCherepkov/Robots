@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'render.cpp'
- * LAST UPDATE: 25.03.2023
+ * LAST UPDATE: 26.03.2023
  */
 
 /* rendering functions */
@@ -13,7 +13,7 @@
 void RenderInit(GLFWwindow* window) {
     vector<vertex> v;
     vector<uint> i;
-    topo::grid<vertex>(v, i, 10, 10, 4, 4);
+    topo::grid<vertex>(v, i, 10, 10, 1, 1);
     prim* smth = new prim(v, i);
     
     mat4 model = mat4(1.0f);
@@ -49,9 +49,9 @@ void RenderInit(GLFWwindow* window) {
 
     lights::point* P = new lights::point();
     P->pos = vec3(1);
-    P->ka = vec3(1, 0.8, 0.5);
-    P->kd = vec3(1, 0.8, 0.5);
-    P->ks = vec3(1, 0.8, 0.5);
+    P->ka = vec3(1, 0.5, 0.5);
+    P->kd = vec3(1, 0.5, 0.5);
+    P->ks = vec3(1, 0.5, 0.5);
     P->shds.push_back(ani.GetShd("rnd/prim/shd/DEFAULT/"));
     ani.AddLight(P);
     P->Apply();
@@ -70,6 +70,16 @@ void RenderInit(GLFWwindow* window) {
     D->shds.push_back(ani.GetShd("rnd/prim/shd/DEFAULT/"));
     ani.AddLight(D);
     D->Apply();
+
+    lights::spot* S = new lights::spot();
+    S->pos = vec3(0, 12, 0);
+    S->dir = vec3(0, -1, 0);
+    S->ka = vec3(0.3, 0.3, 1);
+    S->kd = vec3(0.3, 0.3, 1);
+    S->ks = vec3(0.3, 0.3, 1);
+    S->shds.push_back(ani.GetShd("rnd/prim/shd/DEFAULT/"));
+    ani.AddLight(S);
+    S->Apply();
 }
 
 

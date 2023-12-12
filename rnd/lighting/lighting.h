@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'lighting.h'
- * LAST UPDATE: 25.03.2021
+ * LAST UPDATE: 26.03.2021
  */
 
 #pragma once
@@ -74,6 +74,31 @@ namespace lights {
 			type = "direct";
 		}
 		~direct();
+	};
+
+	class spot : public light {
+	public:
+		vec3 pos, dir;
+		flt cuti, cuto;
+
+		void Apply(void) {
+			ApplyADS();
+			string addres = "spot_lights[" + to_string(ind) + "].",
+				P = addres + "pos", D = addres + "dir", I = addres + "cuti",
+				O = addres + "cuto";
+			for (auto shd : shds) {
+				shd->SetUniform(P, shader::VEC3, &pos);
+				shd->SetUniform(D, shader::VEC3, &dir);
+				shd->SetUniform(I, shader::FLT, &cuti);
+				shd->SetUniform(O, shader::FLT, &cuto);
+			}
+		}
+
+		spot() : light() {
+			type = "spot";
+			cuti = 0.976296;
+			cuto = 0.953717;
+		}
 	};
 };
 

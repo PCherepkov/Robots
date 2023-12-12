@@ -78,9 +78,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <IncludePath>D:\root\prg\addons\vcpkg\packages\assimp_x64-windows\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -122,13 +125,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>X:\glm;X:\glad\include;X:\glfw\glfw-3.3.8.bin.WIN64\include;X:\TGRKIT\INCLUDE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\root\prg\addons\assimp\assimp\include;X:\glm;X:\glad\include;X:\glfw\glfw-3.3.8.bin.WIN64\include;X:\TGRKIT\INCLUDE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>X:\glfw\glfw-3.3.8.bin.WIN64\lib-vc2022;X:\TGRKIT\LIB;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -150,7 +153,10 @@
   <ItemGroup>
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="rnd\anim.cpp" />
     <ClCompile Include="rnd\gl_funcs.cpp" />
+    <ClCompile Include="rnd\object.cpp" />
+    <ClCompile Include="rnd\prim\materials\materials.cpp" />
     <ClCompile Include="rnd\prim\textures\texture.cpp" />
     <ClCompile Include="rnd\render.cpp" />
     <ClCompile Include="ui\controls.cpp" />
@@ -160,6 +166,7 @@
     <ClInclude Include="def.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="mth\camera.h" />
+    <ClInclude Include="rnddef.h" />
     <ClInclude Include="rnd\anim.h" />
     <ClInclude Include="rnd\gl_funcs.h" />
     <ClInclude Include="rnd\lighting\lighting.h" />

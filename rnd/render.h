@@ -10,7 +10,7 @@
 #include "topology/topology.h"
 #include "anim.h"
 #include "gl_funcs.h"
-#include "prim/prim.h"
+#include "object.h"
 
 void RenderInit(GLFWwindow* window);
 void Render(GLFWwindow* window);

@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'main.cpp'
- * LAST UPDATE: 25.03.2023
+ * LAST UPDATE: 28.03.2023
  */
 
 
@@ -18,6 +18,7 @@ int main(int argc, char* argv[]) {
       return 1;
     
     SetWindow(1920, 1080, false);
+    // SetWindow(2560, 1600, true);
     
     ani.cam.SetPos(vec3(6, 2, 1));
     ani.cam.SetAt(vec3(0));
