@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'object.h'
- * LAST UPDATE: 08.12.2021
+ * LAST UPDATE: 15.12.2021
  */
 
 #pragma once
@@ -12,12 +12,20 @@
 #include "./prim/prim.h"
 
 class object {
+	mat4 model;
 public:
-	mat4 projection, view, model;
 	vector<prim*> prs;
+	vector<object*> children;
 	shader* shd;
+	mat4 projection, view;
 
-	bool Load(string &path);
+	inline mat4 GetModel(void) { return model; }
+	void SetModel(const mat4& m);
+	void ApplyModel(const mat4& m);
+	void ApplyShader(const string& path);
+	void ApplyShader(shader& shd);
+
+	bool Load(const string &path);
 
 	void Draw(void);
 

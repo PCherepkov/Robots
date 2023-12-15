@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'anim.cpp'
- * LAST UPDATE: 12.12.2023
+ * LAST UPDATE: 15.12.2023
  */
 
 /* animation system functions */
@@ -40,7 +40,6 @@ void anim::AddLight(lights::light* L) {
 void anim::AddObj(object* obj) {
 	if (obj->shd == nullptr)
 		SetShader(obj);
-	for (auto pr : obj->prs) AddPrim(obj, pr);
 	objs.push_back(obj);
 }
 
@@ -63,11 +62,20 @@ void anim::SetShader(prim* pr, const string& name) {
 	pr->shd = &shaders[name];
 }
 
+void anim::ForceShader(object* obj, const string& name) {
+	for (auto pr : obj->prs)
+		pr->shd = &shaders[name];
+
+	for (auto child : obj->children)
+		ForceShader(child, name);
+}
+
 void anim::SetShader(object* obj, const string& name) {
 	map<string, shader>::iterator it = shaders.find(name);
 	if (it == shaders.end())
 		shaders[name] = shader(name);
 	obj->shd = &shaders[name];
+	ForceShader(obj, name);
 }
 
 void anim::SetShader(prim* pr, shader& shd) {
@@ -108,6 +116,27 @@ void anim::SetMaterial(prim* pr, mtl* src) {
 	if (it == mtls.end())
 		mtls[src->name] = src;
 	pr->material = src;
+}
+
+void anim::AddTex(tex& texture) {
+	if (texes.find(texture.name) != texes.end())
+		return;
+	texes[texture.name] = texture;
+}
+
+void anim::ForceTex(tex& texture) {
+	texes[texture.name] = texture;
+}
+
+bool anim::IsTexByName(string& name) {
+	return texes.find(name) != texes.end();
+}
+
+bool anim::IsTexByPath(const string& path) {
+	for (auto it = texes.begin(); it != texes.end(); it++)
+		if (it->second.path == path)
+			return true;
+	return false;
 }
 
 /* END OF 'anim.cpp' FILE */

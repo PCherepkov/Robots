@@ -1,6 +1,6 @@
 /* Property of Cherepkov Petr
  * FILE: 'lighting.h'
- * LAST UPDATE: 26.03.2021
+ * LAST UPDATE: 15.12.2021
  */
 
 #pragma once
@@ -51,9 +51,9 @@ namespace lights {
 
 		point() : light() {
 			pos = vec3(0);
-			con = 1;
-			lin = 0.09;
-			qad = 0.032;
+			con = 0.8;
+			lin = 0.02;
+			qad = 0.001;
 			type = "point";
 		}
 		~point() {}

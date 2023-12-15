@@ -55,6 +55,9 @@
     <Filter Include="Source Files\render\object">
       <UniqueIdentifier>{a7955c9e-765c-4725-93dc-384eef6138fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\render\prim\shaders\textured">
+      <UniqueIdentifier>{20d697e0-3b79-4b27-a874-b2e1831b22e7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -153,6 +156,12 @@
     </None>
     <None Include="rnd\prim\shd\LIGHT\vert.glsl">
       <Filter>Source Files\render\prim\shaders\light</Filter>
+    </None>
+    <None Include="rnd\prim\shd\TEXTURED\frag.glsl">
+      <Filter>Source Files\render\prim\shaders\textured</Filter>
+    </None>
+    <None Include="rnd\prim\shd\TEXTURED\vert.glsl">
+      <Filter>Source Files\render\prim\shaders\textured</Filter>
     </None>
   </ItemGroup>
 </Project>

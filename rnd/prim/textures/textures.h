@@ -10,12 +10,12 @@
 class tex {
 public:
 	uint code; // opengl code
-	string name;
+	string name, type, path;
 	int width, height, noc; // width, height and number of channels
 	uchar* data;            // image data
 
 	tex();
-	tex(const string& path);
+	tex(const string& path_);
 
 	~tex() {}
 };

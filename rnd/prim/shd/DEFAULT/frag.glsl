@@ -96,7 +96,7 @@ vec3 compute_dir(dir_light L) {
 
 vec3 compute_point(point_light L) {
 	float dist  = length(L.pos - FragPos);
-	float atten = 1.0 / (L.con + L.lin * dist + L.qad * (dist * dist)) * (sin(time) / 2 + 2);
+	float atten = 1.0 / (L.con + L.lin * dist + L.qad * (dist * dist));
 
 	// ambient
 	vec3 ambient = L.ka * mtl.ka;

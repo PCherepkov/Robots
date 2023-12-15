@@ -34,7 +34,8 @@ tex::tex() {
 	delete data;
 }
 
-tex::tex(const string& path) {
+tex::tex(const string& path_) {
+	path = path_;
 	glGenTextures(1, &code);
 	glBindTexture(GL_TEXTURE_2D, code);
 
@@ -53,9 +54,8 @@ tex::tex(const string& path) {
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
-		cout << "Failed to load texture" << endl;
+		cout << "Failed to load texture: " << path << endl;
 	
-	// TODO: move to a destructor???
 	stbi_image_free(data);
 }
 

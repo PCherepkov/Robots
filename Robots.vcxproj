@@ -142,7 +142,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>X:\glm;X:\glad\include;X:\glfw\glfw-3.3.8.bin.WIN64\include;X:\TGRKIT\INCLUDE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\root\prg\addons\assimp\assimp\include;X:\glm;X:\glad\include;X:\glfw\glfw-3.3.8.bin.WIN64\include;X:\TGRKIT\INCLUDE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <SupportJustMyCode>false</SupportJustMyCode>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,7 +151,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>X:\glfw\glfw-3.3.8.bin.WIN64\lib-vc2022;X:\TGRKIT\LIB;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;glfw3dll.lib;assimp-vc143-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -189,6 +190,8 @@
     <None Include="rnd\prim\shd\DEFAULT\vert.glsl" />
     <None Include="rnd\prim\shd\LIGHT\frag.glsl" />
     <None Include="rnd\prim\shd\LIGHT\vert.glsl" />
+    <None Include="rnd\prim\shd\TEXTURED\frag.glsl" />
+    <None Include="rnd\prim\shd\TEXTURED\vert.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
